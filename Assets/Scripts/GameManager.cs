@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int mana;
     public int manaGain;
 
+    public bool inCombat;
+
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI manaText;
 
@@ -44,6 +46,11 @@ public class GameManager : MonoBehaviour
 
         UpdateText();
         UpdateStructures();
+    }
+
+    public void ToggleCombat()
+    {
+        inCombat = !inCombat;
     }
 
     private void UpdateText()

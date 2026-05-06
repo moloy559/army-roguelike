@@ -5,11 +5,23 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour
 {
+    public bool playerControlled;
+
     [SerializeField]
     private GameObject unitPrefab;
 
     [SerializeField]
     private Transform unitSpawnPoint;
+
+    void OnEnable()
+    {
+        GameManager.Instance.structures.Add(this);
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.structures.Remove(this);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +37,7 @@ public class Structure : MonoBehaviour
 
     public void OnTurnStart()
     {
-        Instantiate(unitPrefab, unitSpawnPoint.position, Quaternion.identity);
+        GameObject obj = Instantiate(unitPrefab, unitSpawnPoint.position, Quaternion.identity);
+        obj.GetComponent<ArmyUnit>().playerControlled = playerControlled;
     }
 }

@@ -16,20 +16,22 @@ public class ArmyUnit : MonoBehaviour
     public float attackSpeed = 1f; // attacks per second
     public AttackType attackType;
 
-    public float attackRange = 1.5f;
-
     [Header("Combat")]
-    public float detectionRange = 10f;
+    public float attackRange = 1.5f;
 
     private ArmyUnit currentTarget;
     private float attackCooldown;
 
-    private bool inCombat = false;
 
 
     [Header("Movement")]
     public float moveSpeed = 2f;
     public float stoppingDistance = 0.1f;
+
+    [Header("Separation (Anti-Clumping)")]
+    public float separationRadius = 0.3f;
+    public float separationStrength = 2f;
+
 
     [Header("Wander Area")]
     public float wanderRadius = 3f;
@@ -62,9 +64,9 @@ public class ArmyUnit : MonoBehaviour
 
     private void Update()
     { 
-        if (inCombat)
+        if (GameManager.Instance.inCombat)
         {
-
+            HandleCombat();
         }
         else
         {
@@ -72,8 +74,132 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
+    Vector2 ComputeSeparation()
+    {
+        Vector2 force = Vector2.zero;
+        int count = 0;
+
+        foreach (var unit in GameManager.Instance.allUnits)
+        {
+            if (unit == this) continue;
+
+            float dist = Vector2.Distance(transform.position, unit.transform.position);
+
+            if (dist < separationRadius && dist > 0.001f)
+            {
+                Vector2 away = (Vector2)(transform.position - unit.transform.position);
+
+                // Stronger push when closer
+                force += away.normalized / dist;
+                count++;
+            }
+        }
+
+        if (count > 0)
+        {
+            force /= count;
+        }
+
+        return force * separationStrength;
+    }
+
+    void HandleCombat()
+    {
+        attackCooldown -= Time.deltaTime;
+
+        if (currentTarget == null || currentTarget.currentHealth <= 0)
+        {
+            currentTarget = FindClosestEnemy();
+        }
+
+        if (currentTarget == null)
+        {
+            return;
+        }
+
+        float distance = Vector2.Distance(transform.position, currentTarget.transform.position);
+
+        if (distance <= attackRange)
+        {
+            AttackTarget();
+        }
+        else
+        {
+            MoveTowardsTarget();
+        }
+    }
+
+    ArmyUnit FindClosestEnemy()
+    {
+        ArmyUnit closest = null;
+        float closestDist = Mathf.Infinity;
+
+        foreach (var unit in GameManager.Instance.allUnits)
+        {
+            if (unit == this) continue;
+            if (unit.playerControlled == this.playerControlled) continue;
+            if (unit.currentHealth <= 0) continue;
+
+            float dist = Vector2.Distance(transform.position, unit.transform.position);
+
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closest = unit;
+            }
+        }
+
+        return closest;
+    }
+
+    void MoveTowardsTarget()
+    {
+        Vector2 toTarget = (currentTarget.transform.position - transform.position).normalized;
+
+        Vector2 separation = ComputeSeparation();
+
+        Vector2 finalDirection = (toTarget + separation).normalized;
+
+        transform.position += (Vector3)(finalDirection * moveSpeed * Time.deltaTime);
+    }
+
+    void AttackTarget()
+    {
+
+        if (attackCooldown <= 0f)
+        {
+            attackCooldown = 1f / attackSpeed;
+
+            if (attackType == AttackType.Melee)
+            {
+                currentTarget.TakeDamage(attackDamage);
+            }
+            else if (attackType == AttackType.Ranged)
+            {
+                //Swap to projectile animation later
+                currentTarget.TakeDamage(attackDamage);
+            }
+        }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        Debug.Log(name  + ": " + currentHealth);
+
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
     #region Wandering code
-    
+
     private void HandleWander()
     {
         if (isWaiting)
@@ -93,11 +219,13 @@ public class ArmyUnit : MonoBehaviour
 
     private void MoveToTarget()
     {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            targetPosition,
-            moveSpeed * Time.deltaTime
-        );
+        Vector2 toTarget = (targetPosition - (Vector2)transform.position).normalized;
+
+        Vector2 separation = ComputeSeparation();
+
+        Vector2 finalDirection = (toTarget + separation).normalized;
+
+        transform.position += (Vector3)(finalDirection * moveSpeed * Time.deltaTime);
 
         float distance = Vector2.Distance(transform.position, targetPosition);
 
@@ -123,7 +251,13 @@ public class ArmyUnit : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(Application.isPlaying ? spawnPosition : transform.position, wanderRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, separationRadius);
     }
 }
