@@ -4,6 +4,29 @@ using UnityEngine;
 
 public class ArmyUnit : MonoBehaviour
 {
+    public enum AttackType { Melee, Ranged }
+
+    public bool playerControlled;
+
+    [Header("Stats")]
+    public float maxHealth = 100f;
+    private float currentHealth;
+
+    public float attackDamage = 10f;
+    public float attackSpeed = 1f; // attacks per second
+    public AttackType attackType;
+
+    public float attackRange = 1.5f;
+
+    [Header("Combat")]
+    public float detectionRange = 10f;
+
+    private ArmyUnit currentTarget;
+    private float attackCooldown;
+
+    private bool inCombat = false;
+
+
     [Header("Movement")]
     public float moveSpeed = 2f;
     public float stoppingDistance = 0.1f;
@@ -18,18 +41,54 @@ public class ArmyUnit : MonoBehaviour
     private Vector2 spawnPosition;
     private Vector2 targetPosition;
     private bool isWaiting = false;
+    private float waitTime;
+
+    void OnEnable()
+    {
+       GameManager.Instance.allUnits.Add(this);
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.allUnits.Remove(this);
+    }
 
     void Start()
     {
         spawnPosition = transform.position;
         PickNewTarget();
+        currentHealth = maxHealth;
     }
 
     private void Update()
-    {
-        if (isWaiting) return;
+    { 
+        if (inCombat)
+        {
 
-        MoveToTarget();
+        }
+        else
+        {
+            HandleWander();
+        }
+    }
+
+    #region Wandering code
+    
+    private void HandleWander()
+    {
+        if (isWaiting)
+        {
+            waitTime -= Time.deltaTime;
+            if (waitTime <= 0) 
+            {
+                PickNewTarget();
+                isWaiting = false;
+            }
+        }
+        else
+        {
+            MoveToTarget();
+        }
     }
 
     private void MoveToTarget()
@@ -44,7 +103,7 @@ public class ArmyUnit : MonoBehaviour
 
         if (distance <= stoppingDistance)
         {
-            StartCoroutine(WaitAndPickNewTarget());
+            StartWaiting();
         }
     }
 
@@ -54,16 +113,13 @@ public class ArmyUnit : MonoBehaviour
         targetPosition = spawnPosition + randomOffset;
     }
 
-    private IEnumerator WaitAndPickNewTarget()
+    private void StartWaiting()
     {
         isWaiting = true;
-
-        float waitTime = Random.Range(minWaitTime, maxWaitTime);
-        yield return new WaitForSeconds(waitTime);
-
-        PickNewTarget();
-        isWaiting = false;
+        waitTime = Random.Range(minWaitTime, maxWaitTime);
     }
+
+    #endregion
 
     void OnDrawGizmosSelected()
     {
