@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ArmyUnit : MonoBehaviour
 {
@@ -21,8 +23,6 @@ public class ArmyUnit : MonoBehaviour
 
     private ArmyUnit currentTarget;
     private float attackCooldown;
-
-
 
     [Header("Movement")]
     public float moveSpeed = 2f;

@@ -23,18 +23,6 @@ public class Structure : MonoBehaviour
         GameManager.Instance.structures.Remove(this);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnTurnStart()
     {
         GameObject obj = Instantiate(unitPrefab, unitSpawnPoint.position, Quaternion.identity);
