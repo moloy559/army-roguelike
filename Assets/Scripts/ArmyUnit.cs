@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ public class ArmyUnit : MonoBehaviour
     [Header("Stats")]
     public float maxHealth = 100f;
     private float currentHealth;
+    public float CurrentHealth => currentHealth;
 
     public float attackDamage = 10f;
     public float attackSpeed = 1f; // attacks per second
@@ -72,6 +74,16 @@ public class ArmyUnit : MonoBehaviour
         {
             HandleWander();
         }
+    }
+
+    public void Fill(UnitData data)
+    {
+        maxHealth = data.maxHealth;
+        currentHealth = maxHealth;
+        attackDamage = data.attackDamage;
+        attackRange = data.attackRange;
+        attackSpeed = data.attackSpeed;
+        moveSpeed = data.moveSpeed;
     }
 
     Vector2 ComputeSeparation()
@@ -185,7 +197,6 @@ public class ArmyUnit : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        Debug.Log(name  + ": " + currentHealth);
 
         if (currentHealth <= 0f)
         {

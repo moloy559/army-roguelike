@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Lane : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<Structure> structures;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private List<UnitData> unitData;
+
+
+    public List<ArmyUnit> playerArmy;
+    public List<ArmyUnit> enemyArmy;
 }
