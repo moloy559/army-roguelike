@@ -13,7 +13,7 @@ public class QuickSim : MonoBehaviour
     private ArmyUnit unit1;
     private ArmyUnit unit2;
 
-    private bool simOver = false;
+    public bool simOver = false;
 
     public void Start()
     {

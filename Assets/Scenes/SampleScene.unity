@@ -705,6 +705,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548322352}
   m_CullTransparentMesh: 1
+--- !u!1 &683142965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 683142967}
+  - component: {fileID: 683142966}
+  m_Layer: 0
+  m_Name: Simulation Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &683142966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683142965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a742f436953c7c42a316cf47ad89942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAssetData: {fileID: 4900000, guid: 5859126b3bfa04c408ce660fb265b2e1, type: 3}
+  myUnitDataList:
+    unitData: []
+  NumberOfColumns: 6
+  QuickSim: {fileID: 860240685}
+  SimOffset: 1
+  SimulationsOffset: 5
+  UnitSeperation: 1
+  numberPerSim: 4
+  quickSimList: []
+  myOutputDataList:
+    outputData:
+    - Name: Test
+      remainingHealth: Test
+--- !u!4 &683142967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683142965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.02, y: -1.03, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717287797
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,66 +895,6 @@ MonoBehaviour:
   playerControlled: 1
   unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
   unitSpawnPoint: {fileID: 717287798}
---- !u!1 &775588266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 775588268}
-  - component: {fileID: 775588267}
-  m_Layer: 0
-  m_Name: QuickSim (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &775588267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775588266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91346f8266e9c54698a3a66af4fc2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
-  unitData1:
-    name: Guy
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitData2:
-    name: Guy2
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitDist: 1
---- !u!4 &775588268
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775588266}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.4, y: 21.4, z: -0.06645299}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &858651456
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,66 +963,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &860240685
+--- !u!1 &860240685 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8405651016570189882, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+  m_PrefabInstance: {fileID: 7944840191974448770}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 860240687}
-  - component: {fileID: 860240686}
-  m_Layer: 0
-  m_Name: QuickSim (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &860240686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860240685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91346f8266e9c54698a3a66af4fc2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
-  unitData1:
-    name: Guy
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitData2:
-    name: Guy2
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitDist: 1
---- !u!4 &860240687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860240685}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -2.5969124, z: -0.06645299}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904560935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,66 +1047,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.132733, y: 1.9797599, z: -0.15509218}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1017010832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1017010834}
-  - component: {fileID: 1017010833}
-  m_Layer: 0
-  m_Name: QuickSim (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1017010833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1017010832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91346f8266e9c54698a3a66af4fc2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
-  unitData1:
-    name: Guy
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitData2:
-    name: Guy2
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitDist: 1
---- !u!4 &1017010834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1017010832}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.4, y: -2.5969124, z: -0.06645299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2140,66 +2023,6 @@ Transform:
   - {fileID: 904560936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1990404257
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1990404259}
-  - component: {fileID: 1990404258}
-  m_Layer: 0
-  m_Name: QuickSim (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1990404258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990404257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91346f8266e9c54698a3a66af4fc2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
-  unitData1:
-    name: Guy
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitData2:
-    name: Guy2
-    maxHealth: 10
-    attackDamage: 10
-    attackSpeed: 10
-    attackRange: 0.5
-    moveSpeed: 1
-  unitDist: 1
---- !u!4 &1990404259
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990404257}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: -15.2, z: -0.06645299}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002540051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,6 +2322,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
+--- !u!1001 &7944840191974448770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5969124
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.06645299
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476924680479853333, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405651016570189882, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
+      propertyPath: m_Name
+      value: QuickSim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2515,7 +2395,5 @@ SceneRoots:
   - {fileID: 2002540055}
   - {fileID: 858651459}
   - {fileID: 315323448}
-  - {fileID: 860240687}
-  - {fileID: 775588268}
-  - {fileID: 1990404259}
-  - {fileID: 1017010834}
+  - {fileID: 7944840191974448770}
+  - {fileID: 683142967}
