@@ -47,6 +47,10 @@ public class ArmyUnit : MonoBehaviour
     private bool isWaiting = false;
     private float waitTime;
 
+    private Collider2D[] nearbyUnits = new Collider2D[32];
+
+    private float retargetTimer;
+    
     void OnEnable()
     {
        GameManager.Instance.allUnits.Add(this);
@@ -62,6 +66,7 @@ public class ArmyUnit : MonoBehaviour
         spawnPosition = transform.position;
         PickNewTarget();
         currentHealth = maxHealth;
+        retargetTimer = Random.Range(0f, 0.5f);
     }
 
     private void Update()
@@ -91,18 +96,27 @@ public class ArmyUnit : MonoBehaviour
         Vector2 force = Vector2.zero;
         int count = 0;
 
-        foreach (var unit in GameManager.Instance.allUnits)
+        int hits = Physics2D.OverlapCircleNonAlloc(
+            transform.position,
+            separationRadius,
+            nearbyUnits
+        );
+
+        for (int i = 0; i < hits; i++)
         {
-            if (unit == this) continue;
+            ArmyUnit unit = nearbyUnits[i].GetComponent<ArmyUnit>();
 
-            float dist = Vector2.Distance(transform.position, unit.transform.position);
+            if (unit == null || unit == this)
+                continue;
+            if (unit.playerControlled != this.playerControlled) continue;
 
-            if (dist < separationRadius && dist > 0.001f)
+
+            Vector2 offset = (Vector2)transform.position - (Vector2)unit.transform.position;
+            float sqrDist = offset.sqrMagnitude;
+
+            if (sqrDist > 0.0001f)
             {
-                Vector2 away = (Vector2)(transform.position - unit.transform.position);
-
-                // Stronger push when closer
-                force += away.normalized / dist;
+                force += offset.normalized / Mathf.Sqrt(sqrDist);
                 count++;
             }
         }
@@ -121,7 +135,12 @@ public class ArmyUnit : MonoBehaviour
 
         if (currentTarget == null || currentTarget.currentHealth <= 0)
         {
-            currentTarget = FindClosestEnemy();
+            retargetTimer -= Time.deltaTime;
+            if (retargetTimer < 0)
+            {
+                currentTarget = FindClosestEnemy();
+                retargetTimer = Random.Range(0f, 0.5f);
+            }
         }
 
         if (currentTarget == null)
@@ -144,19 +163,22 @@ public class ArmyUnit : MonoBehaviour
     ArmyUnit FindClosestEnemy()
     {
         ArmyUnit closest = null;
-        float closestDist = Mathf.Infinity;
+        float closestSqrDist = Mathf.Infinity;
+
+        Vector2 myPos = transform.position;
+
 
         foreach (var unit in GameManager.Instance.allUnits)
         {
             if (unit == this) continue;
             if (unit.playerControlled == this.playerControlled) continue;
-            if (unit.currentHealth <= 0) continue;
+            Vector2 offset = (Vector2)unit.transform.position - myPos;
 
-            float dist = Vector2.Distance(transform.position, unit.transform.position);
+            float sqrDist = offset.sqrMagnitude;
 
-            if (dist < closestDist)
+            if (sqrDist < closestSqrDist)
             {
-                closestDist = dist;
+                closestSqrDist = sqrDist;
                 closest = unit;
             }
         }
@@ -245,7 +267,7 @@ public class ArmyUnit : MonoBehaviour
             StartWaiting();
         }
     }
-
+            
     private void PickNewTarget()
     {
         Vector2 randomOffset = Random.insideUnitCircle * wanderRadius;

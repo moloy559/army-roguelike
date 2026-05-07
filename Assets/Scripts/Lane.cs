@@ -6,9 +6,9 @@ public class Lane : MonoBehaviour
 {
     public List<Structure> structures;
 
-    private List<UnitData> unitData;
+    //public List<ArmyUnit> playerArmy;
+    //public List<ArmyUnit> enemyArmy;
 
 
-    public List<ArmyUnit> playerArmy;
-    public List<ArmyUnit> enemyArmy;
+
 }

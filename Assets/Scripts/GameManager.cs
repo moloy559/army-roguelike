@@ -19,8 +19,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI manaText;
 
     public List<Structure> structures;
-
     public List<ArmyUnit> allUnits;
+
+    public TempData data;
+
+    public Dictionary<string, UnitData> unitData;
+    public Dictionary<string, StructureData> structureData;
 
     private void Awake()
     {
@@ -30,6 +34,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        unitData = new Dictionary<string, UnitData>();
+        foreach(UnitData unitD in data.units)
+        {
+            unitData.Add(unitD.name, unitD);
+        }
+
+        structureData = new Dictionary<string, StructureData>();
+        foreach(StructureData structureD in data.structures)
+        {
+            structureData.Add(structureD.name, structureD);
+        }
+
         UpdateText();
     }
 

@@ -15,18 +15,18 @@ MonoBehaviour:
   units:
   - name: Knight
     maxHealth: 50
-    attackDamage: 2
+    attackDamage: 10
     attackSpeed: 1
-    attackRange: 0.5
+    attackRange: 0.2
     moveSpeed: 2
   structures:
-  - name: 
-    goldCost: 0
+  - name: KnightMaker
+    goldCost: 2
     sprite: {fileID: 21300000, guid: ead8ce1effa932e46a9b94f2acec3fc5, type: 3}
     inputResource:
       resourceName: 
       amount: 0
     outputResource:
-      resourceName: 
-      amount: 0
+      resourceName: Knight
+      amount: 50
   resources: []
