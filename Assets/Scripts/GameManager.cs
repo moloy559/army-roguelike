@@ -22,9 +22,6 @@ public class GameManager : MonoBehaviour
 
     public List<ArmyUnit> allUnits;
 
-    public GameInfo infoForGame;
-
-
     private void Awake()
     {
         Instance = this;
@@ -34,13 +31,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UpdateText();
-
-
-        if(infoForGame != null) Debug.Log(infoForGame.level);
-
-        infoForGame = new GameInfo();
-
-        if (infoForGame != null) Debug.Log(infoForGame.level);
     }
 
     public void TurnStart()
@@ -70,11 +60,4 @@ public class GameManager : MonoBehaviour
             structure.OnTurnStart();
         }
     }
-}
-
-public class GameInfo
-{
-    public int level;
-    public string directyName;
-    public int gold;
 }
