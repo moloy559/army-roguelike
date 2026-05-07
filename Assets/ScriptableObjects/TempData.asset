@@ -19,6 +19,12 @@ MonoBehaviour:
     attackSpeed: 1
     attackRange: 0.2
     moveSpeed: 2
+  - name: Archer
+    maxHealth: 25
+    attackDamage: 10
+    attackSpeed: 0.25
+    attackRange: 1
+    moveSpeed: 1.5
   structures:
   - name: KnightMaker
     goldCost: 2
@@ -28,5 +34,14 @@ MonoBehaviour:
       amount: 0
     outputResource:
       resourceName: Knight
-      amount: 50
+      amount: 8
+  - name: ArcherMaker
+    goldCost: 2
+    sprite: {fileID: 21300000, guid: ead8ce1effa932e46a9b94f2acec3fc5, type: 3}
+    inputResource:
+      resourceName: 
+      amount: 0
+    outputResource:
+      resourceName: Archer
+      amount: 8
   resources: []

@@ -66,7 +66,7 @@ public class ArmyUnit : MonoBehaviour
         spawnPosition = transform.position;
         PickNewTarget();
         currentHealth = maxHealth;
-        retargetTimer = Random.Range(0f, 0.5f);
+        retargetTimer = Random.Range(0f, 0.15f);
     }
 
     private void Update()
@@ -132,15 +132,12 @@ public class ArmyUnit : MonoBehaviour
     void HandleCombat()
     {
         attackCooldown -= Time.deltaTime;
+        retargetTimer -= Time.deltaTime;
 
-        if (currentTarget == null || currentTarget.currentHealth <= 0)
+        if (retargetTimer <= 0f)
         {
-            retargetTimer -= Time.deltaTime;
-            if (retargetTimer < 0)
-            {
-                currentTarget = FindClosestEnemy();
-                retargetTimer = Random.Range(0f, 0.5f);
-            }
+            currentTarget = FindClosestEnemy();
+            retargetTimer = 0.15f;
         }
 
         if (currentTarget == null)
