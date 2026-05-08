@@ -547,7 +547,7 @@ MonoBehaviour:
   QuickSim: {fileID: 8405651016570189882, guid: 27f13b6e2db0ffc458505563e4b6a0df, type: 3}
   SimOffset: 15
   SimulationsOffset: 0
-  UnitSeperation: 8
+  UnitSeperation: 4.5
   simsPerBatch: 20
   quickSimList: []
   dataIsWritten: 0

@@ -68,12 +68,12 @@ public class SimulationManager : MonoBehaviour
         for(int i =0; i<tableSize; i++)
         {
             myUnitDataList.unitData[i] = new UnitData();
-            myUnitDataList.unitData[i].name = data[NumberOfColumns * (i + 1)+1];
-            myUnitDataList.unitData[i].maxHealth = float.Parse(data[NumberOfColumns * (i + 1)+1]);
-            myUnitDataList.unitData[i].attackDamage = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
-            myUnitDataList.unitData[i].attackRange = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
-            myUnitDataList.unitData[i].attackSpeed = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
-            myUnitDataList.unitData[i].moveSpeed = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
+            myUnitDataList.unitData[i].name = data[NumberOfColumns * (i + 1)];
+            myUnitDataList.unitData[i].maxHealth = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
+            myUnitDataList.unitData[i].attackDamage = float.Parse(data[NumberOfColumns * (i + 1)+2]);
+            myUnitDataList.unitData[i].attackRange = float.Parse(data[NumberOfColumns * (i + 1)+3]);
+            myUnitDataList.unitData[i].attackSpeed = float.Parse(data[NumberOfColumns * (i + 1) + 4]);
+            myUnitDataList.unitData[i].moveSpeed = float.Parse(data[NumberOfColumns * (i + 1) + 5]);
         }
 
     }
@@ -158,11 +158,14 @@ public class SimulationManager : MonoBehaviour
 
         for (int i = 0; i<simsPerBatch; i++)
         {
+            int combinationNum = new int();
+            combinationNum = i + (simsPerBatch * currentSimBatch);
 
-            
+            //Debug.Log(combinationNum);
+
                 quickSimList.Add(CreateQuickSim(i));
-                quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[CreateCombinations()[i + (simsPerBatch * currentSimBatch)].unit1-1];
-                quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[CreateCombinations()[i + (simsPerBatch * currentSimBatch)].unit2-1];
+                quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[CreateCombinations()[combinationNum].unit1-1];
+                quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[CreateCombinations()[combinationNum].unit2-1];
                 quickSimList[i].GetComponent<QuickSim>().unitDist = UnitSeperation;
        
 
