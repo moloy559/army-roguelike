@@ -25,11 +25,12 @@ public class SimulationManager : MonoBehaviour
     public float SimulationsOffset;
     public float UnitSeperation;
     public int simsPerBatch;
-    private int currentSimBatch = 1;
+    private int currentSimBatch = 0;
 
     public List<GameObject> quickSimList;
 
     public bool dataIsWritten = false;
+    public bool done = false;
 
     string filename = "";
     [System.Serializable]
@@ -67,7 +68,7 @@ public class SimulationManager : MonoBehaviour
         for(int i =0; i<tableSize; i++)
         {
             myUnitDataList.unitData[i] = new UnitData();
-            myUnitDataList.unitData[i].name = data[7 * (i + 1)];
+            myUnitDataList.unitData[i].name = data[NumberOfColumns * (i + 1)+1];
             myUnitDataList.unitData[i].maxHealth = float.Parse(data[NumberOfColumns * (i + 1)+1]);
             myUnitDataList.unitData[i].attackDamage = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
             myUnitDataList.unitData[i].attackRange = float.Parse(data[NumberOfColumns * (i + 1) + 1]);
@@ -108,7 +109,7 @@ public class SimulationManager : MonoBehaviour
 
                 CleanUpAfterBatch();
                 GameManager.Instance.inCombat = false;
-                if (currentSimBatch < CreateCombinations().Count / simsPerBatch)
+                if (currentSimBatch < (CreateCombinations().Count / simsPerBatch)-1)
                 {
 
                     currentSimBatch++;
@@ -116,14 +117,25 @@ public class SimulationManager : MonoBehaviour
                     createQuickSimGroup(currentSimBatch);
                     GameManager.Instance.inCombat = true;
                 }
+                else if (done == false)
+                {
+
+                    WriteCSV();
+
+                    Debug.Log("The Simulations are done.");
+                    done = true;
+
+                }
                 return;
             }
             else
             {
                 addOutputData();
 
-                WriteCSV();
+                
                 dataIsWritten = true;
+
+                
             }
 
             
@@ -146,13 +158,14 @@ public class SimulationManager : MonoBehaviour
 
         for (int i = 0; i<simsPerBatch; i++)
         {
- 
-     
-            quickSimList.Add(CreateQuickSim(i));
-            quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[CreateCombinations()[i+(simsPerBatch*currentSimBatch)+1].unit1-1];
-            quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[CreateCombinations()[i + (simsPerBatch * currentSimBatch)+1].unit2-1];
 
-            quickSimList[i].GetComponent<QuickSim>().unitDist = UnitSeperation;
+            
+                quickSimList.Add(CreateQuickSim(i));
+                quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[CreateCombinations()[i + (simsPerBatch * currentSimBatch)].unit1-1];
+                quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[CreateCombinations()[i + (simsPerBatch * currentSimBatch)].unit2-1];
+                quickSimList[i].GetComponent<QuickSim>().unitDist = UnitSeperation;
+       
+
         }
 
     }
@@ -176,7 +189,6 @@ public class SimulationManager : MonoBehaviour
         }
 
         quickSimList.Clear();
-        myOutputDataList.outputData.Clear();
 
     }
 
@@ -207,7 +219,7 @@ public class SimulationManager : MonoBehaviour
 
             OutputData outputData = new OutputData();
 
-            outputData.Matchup = new string(CreateCombinations()[i].unit1 + "--" + CreateCombinations()[i].unit2);
+            outputData.Matchup = new string(CreateCombinations()[i+ (simsPerBatch * currentSimBatch)].unit1 + "--" + CreateCombinations()[i+ (simsPerBatch * currentSimBatch)].unit2);
             if (quickSimList[i].GetComponent<QuickSim>().unit1 == null)
             {
                 

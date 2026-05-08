@@ -548,9 +548,10 @@ MonoBehaviour:
   SimOffset: 15
   SimulationsOffset: 0
   UnitSeperation: 8
-  simsPerBatch: 4
+  simsPerBatch: 20
   quickSimList: []
   dataIsWritten: 0
+  done: 0
   myOutputDataList:
     outputData: []
 --- !u!4 &683142967
