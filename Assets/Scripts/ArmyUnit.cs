@@ -42,6 +42,8 @@ public class ArmyUnit : MonoBehaviour
     public float minWaitTime = 1f;
     public float maxWaitTime = 3f;
 
+    private Lane lane;
+
     private Vector2 spawnPosition;
     private Vector2 targetPosition;
     private bool isWaiting = false;
@@ -51,15 +53,6 @@ public class ArmyUnit : MonoBehaviour
 
     private float retargetTimer;
     
-    void OnEnable()
-    {
-       GameManager.Instance.allUnits.Add(this);
-    }
-
-    void OnDisable()
-    {
-        GameManager.Instance.allUnits.Remove(this);
-    }
 
     void Start()
     {
@@ -70,7 +63,9 @@ public class ArmyUnit : MonoBehaviour
     }
 
     private void Update()
-    { 
+    {
+        if(lane == null) return;
+
         if (GameManager.Instance.inCombat)
         {
             HandleCombat();
@@ -81,7 +76,7 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
-    public void Fill(UnitData data)
+    public void Fill(UnitData data, Lane lane)
     {
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
@@ -89,6 +84,8 @@ public class ArmyUnit : MonoBehaviour
         attackRange = data.attackRange;
         attackSpeed = data.attackSpeed;
         moveSpeed = data.moveSpeed;
+        
+        this.lane = lane;
     }
 
     Vector2 ComputeSeparation()
@@ -165,10 +162,10 @@ public class ArmyUnit : MonoBehaviour
         Vector2 myPos = transform.position;
 
 
-        foreach (var unit in GameManager.Instance.allUnits)
+        foreach (var unit in lane.GetArmy(!playerControlled))
         {
+            if (unit == null) continue;
             if (unit == this) continue;
-            if (unit.playerControlled == this.playerControlled) continue;
             Vector2 offset = (Vector2)unit.transform.position - myPos;
 
             float sqrDist = offset.sqrMagnitude;

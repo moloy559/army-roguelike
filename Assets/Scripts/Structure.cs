@@ -1,61 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class Structure : MonoBehaviour
 {
-    public bool playerControlled;
-    public string nameId;
 
     private StructureData data;
 
-    [SerializeField]
-    private GameObject unitPrefab;
+    private bool hasRecievedInput;
+    public bool HasRecievedInput { get { return hasRecievedInput; } }
 
-    [SerializeField]
-    private Transform unitSpawnPoint;
+    private SpriteRenderer spriteRenderer;
 
-    void OnEnable()
+    public void Fill(StructureData structureData)
     {
-        GameManager.Instance.structures.Add(this);
+        data = structureData;   
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = structureData.sprite;
+
+
     }
 
-    void OnDisable()
+    public bool CanGiveOutput(SerializedDictionary<string, int> resources)
     {
-        GameManager.Instance.structures.Remove(this);
-    }
-
-    public void SetData()
-    {
-        if (GameManager.Instance.structureData.ContainsKey(nameId))
+        if (data.inputResource.amount == 0) return true;
+        if (resources.ContainsKey(data.inputResource.resourceName))
         {
-            data = GameManager.Instance.structureData[nameId];
+            if (resources[data.inputResource.resourceName] >= data.inputResource.amount) return true;
         }
+        return false;
     }
 
-    public void OnTurnStart()
+    public void ModifyResources(SerializedDictionary<string, int> resources)
     {
-        if (data == null)
+        if(hasRecievedInput)
         {
-            SetData();
-        }
-        if (data != null) 
-        {
-            if (GameManager.Instance.unitData.ContainsKey(data.outputResource.resourceName))
-            {
-                for (int i = 0; i < data.outputResource.amount; i++) 
-                {
-                    GameObject obj = Instantiate(unitPrefab, unitSpawnPoint.position, Quaternion.identity);
-                    obj.GetComponent<ArmyUnit>().playerControlled = playerControlled;
-                    obj.GetComponent<ArmyUnit>().Fill(GameManager.Instance.unitData[data.outputResource.resourceName]);
-                }
-            }
-
+            Debug.LogError("Structure already modified resources");
+            return;
         }
 
+        if (data.inputResource.amount !=0)
+            resources[data.inputResource.resourceName] -= data.inputResource.amount;
 
-
-
+        if (!resources.ContainsKey(data.outputResource.resourceName))
+        {
+            resources.Add(data.outputResource.resourceName, 0);
+        }
+        resources[data.outputResource.resourceName] += data.outputResource.amount;
+        hasRecievedInput = true;
     }
+
 }
