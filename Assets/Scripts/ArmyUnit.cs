@@ -10,6 +10,7 @@ public class ArmyUnit : MonoBehaviour
     public enum AttackType { Melee, Ranged }
 
     public bool playerControlled;
+    public bool pause = false;
 
     [Header("Stats")]
     public float maxHealth = 100f;
@@ -66,7 +67,7 @@ public class ArmyUnit : MonoBehaviour
 
     private void Update()
     { 
-        if (GameManager.Instance.inCombat)
+        if (GameManager.Instance.inCombat && pause ==false )
         {
             HandleCombat();
         }

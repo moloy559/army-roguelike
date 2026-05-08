@@ -10,10 +10,11 @@ public class QuickSim : MonoBehaviour
 
     public float unitDist;
 
-    private ArmyUnit unit1;
-    private ArmyUnit unit2;
+    public ArmyUnit unit1;
+    public ArmyUnit unit2;
 
     public bool simOver = false;
+    public bool turnedOff = false;
 
     public void Start()
     {
@@ -36,7 +37,19 @@ public class QuickSim : MonoBehaviour
 
     private void Update()
     {
-        if (simOver) return;
+        if (simOver)
+        {
+            if (turnedOff) return;
+            if (unit1 != null)
+            {
+                unit1.pause = true;
+            }
+            if (unit2 != null)
+            {
+                unit2.pause = true;
+            }
+            return;
+        }
 
 
         if(unit1 == null)
