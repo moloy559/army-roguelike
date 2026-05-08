@@ -99,6 +99,10 @@ MonoBehaviour:
       Value: 1
     - Key: population
       Value: 1
+    - Key: knight
+      Value: 25
+    - Key: archer
+      Value: 25
 --- !u!1 &3799805900787504160
 GameObject:
   m_ObjectHideFlags: 0
