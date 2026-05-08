@@ -548,7 +548,7 @@ MonoBehaviour:
   SimOffset: 15
   SimulationsOffset: 0
   UnitSeperation: 4.5
-  simsPerBatch: 20
+  simsPerBatch: 30
   quickSimList: []
   dataIsWritten: 0
   done: 0

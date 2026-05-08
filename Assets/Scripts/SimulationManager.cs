@@ -32,6 +32,8 @@ public class SimulationManager : MonoBehaviour
     public bool dataIsWritten = false;
     public bool done = false;
 
+    private List<Combination> allMatchups;
+
     string filename = "";
     [System.Serializable]
     public class OutputData
@@ -54,6 +56,11 @@ public class SimulationManager : MonoBehaviour
         public int unit1;
         public int unit2;
     }
+
+    private TextWriter tw;
+
+    public int completedSims;
+
 
 
     void ReadCSV()
@@ -82,16 +89,19 @@ public class SimulationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 20.0f;
         ReadCSV();
+
+        allMatchups = CreateCombinations();
 
         createQuickSimGroup(currentSimBatch);
 
         filename = Application.dataPath + "/test.csv";
 
-        for (int i = 0; i < CreateCombinations().Count; i++)
-            Debug.Log(CreateCombinations()[i].unit1 + ", " + CreateCombinations()[i].unit2);
+        for (int i = 0; i < allMatchups.Count; i++)
+            Debug.Log(allMatchups[i].unit1 + ", " + allMatchups[i].unit2);
 
-        //Debug.Log(CreateCombinations().Count / simsPerBatch);
+        //Debug.Log(allMatchups.Count / simsPerBatch);
 
 
     }
@@ -109,9 +119,9 @@ public class SimulationManager : MonoBehaviour
 
                 CleanUpAfterBatch();
                 GameManager.Instance.inCombat = false;
-                if (currentSimBatch < (CreateCombinations().Count / simsPerBatch)-1)
+                if (currentSimBatch < (allMatchups.Count / simsPerBatch)-1)
                 {
-
+                    completedSims = completedSims + simsPerBatch;
                     currentSimBatch++;
                     dataIsWritten = false;
                     createQuickSimGroup(currentSimBatch);
@@ -120,7 +130,7 @@ public class SimulationManager : MonoBehaviour
                 else if (done == false)
                 {
 
-                    WriteCSV();
+                    //WriteCSV();
 
                     Debug.Log("The Simulations are done.");
                     done = true;
@@ -131,8 +141,7 @@ public class SimulationManager : MonoBehaviour
             else
             {
                 addOutputData();
-
-                
+                WriteCSV();
                 dataIsWritten = true;
 
                 
@@ -164,8 +173,8 @@ public class SimulationManager : MonoBehaviour
             //Debug.Log(combinationNum);
 
                 quickSimList.Add(CreateQuickSim(i));
-                quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[CreateCombinations()[combinationNum].unit1-1];
-                quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[CreateCombinations()[combinationNum].unit2-1];
+                quickSimList[i].GetComponent<QuickSim>().unitData1 = myUnitDataList.unitData[allMatchups[combinationNum].unit1-1];
+                quickSimList[i].GetComponent<QuickSim>().unitData2 = myUnitDataList.unitData[allMatchups[combinationNum].unit2-1];
                 quickSimList[i].GetComponent<QuickSim>().unitDist = UnitSeperation;
        
 
@@ -192,6 +201,7 @@ public class SimulationManager : MonoBehaviour
         }
 
         quickSimList.Clear();
+        myOutputDataList.outputData.Clear();
 
     }
 
@@ -200,9 +210,12 @@ public class SimulationManager : MonoBehaviour
     {
         if(myOutputDataList.outputData.Count>0)
         {
-            TextWriter tw = new StreamWriter(filename, false);
-            tw.WriteLine("Matchup, Winner, Remaining Health");
-            tw.Close();
+            if (currentSimBatch == 0)
+            {
+                tw = new StreamWriter(filename, false);
+                tw.WriteLine("Matchup, Winner, Remaining Health");
+                tw.Close();
+            }
 
             tw = new StreamWriter(filename, true);
             
@@ -222,7 +235,7 @@ public class SimulationManager : MonoBehaviour
 
             OutputData outputData = new OutputData();
 
-            outputData.Matchup = new string(CreateCombinations()[i+ (simsPerBatch * currentSimBatch)].unit1 + "--" + CreateCombinations()[i+ (simsPerBatch * currentSimBatch)].unit2);
+            outputData.Matchup = new string(allMatchups[i+ (simsPerBatch * currentSimBatch)].unit1 + "--" + allMatchups[i+ (simsPerBatch * currentSimBatch)].unit2);
             if (quickSimList[i].GetComponent<QuickSim>().unit1 == null)
             {
                 
