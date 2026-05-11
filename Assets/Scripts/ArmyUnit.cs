@@ -71,7 +71,7 @@ public class ArmyUnit : MonoBehaviour
     {
         if(lane == null) return;
 
-        if (GameManager.Instance.inCombat && pause ==false )
+        if (GameManager.Instance.inCombat && pause == false)
         {
             HandleCombat();
         }
