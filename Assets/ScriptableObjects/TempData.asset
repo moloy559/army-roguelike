@@ -13,20 +13,43 @@ MonoBehaviour:
   m_Name: TempData
   m_EditorClassIdentifier: 
   units:
-  - name: Knight
+  - name: knight
+    sprite: {fileID: 21300000, guid: 0f85c1ef6f5975f4790855b9f5a73345, type: 3}
     maxHealth: 50
-    attackDamage: 2
+    attackDamage: 10
     attackSpeed: 1
-    attackRange: 0.5
+    attackRange: 0.2
     moveSpeed: 2
+  - name: archer
+    sprite: {fileID: 21300000, guid: 0f85c1ef6f5975f4790855b9f5a73345, type: 3}
+    maxHealth: 25
+    attackDamage: 10
+    attackSpeed: 0.25
+    attackRange: 1
+    moveSpeed: 1.5
   structures:
-  - name: 
-    goldCost: 0
+  - name: KnightMaker
     sprite: {fileID: 21300000, guid: ead8ce1effa932e46a9b94f2acec3fc5, type: 3}
+    goldCost: 2
     inputResource:
-      resourceName: 
-      amount: 0
+      resourceName: population
+      amount: 1
     outputResource:
-      resourceName: 
-      amount: 0
-  resources: []
+      resourceName: knight
+      amount: 8
+  - name: ArcherMaker
+    sprite: {fileID: 21300000, guid: ead8ce1effa932e46a9b94f2acec3fc5, type: 3}
+    goldCost: 2
+    inputResource:
+      resourceName: population
+      amount: 1
+    outputResource:
+      resourceName: archer
+      amount: 8
+  resources:
+  - name: gold
+    sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  - name: population
+    sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
+  - name: pop-growth
+    sprite: {fileID: 21300000, guid: ee8ce5cd9c0883f4182b5cfd43cfd7fe, type: 3}

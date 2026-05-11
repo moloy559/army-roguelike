@@ -1,31 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class Structure : MonoBehaviour
 {
-    public bool playerControlled;
 
-    [SerializeField]
-    private GameObject unitPrefab;
+    private StructureData data;
 
-    [SerializeField]
-    private Transform unitSpawnPoint;
+    private bool hasRecievedInput;
+    public bool HasRecievedInput { get { return hasRecievedInput; } }
 
-    void OnEnable()
+    private SpriteRenderer spriteRenderer;
+
+    public void Fill(StructureData structureData)
     {
-        GameManager.Instance.structures.Add(this);
+        data = structureData;   
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = structureData.sprite;
+
+
     }
 
-    void OnDisable()
+    public bool CanGiveOutput(SerializedDictionary<string, int> resources)
     {
-        GameManager.Instance.structures.Remove(this);
+        if (data.inputResource.amount == 0) return true;
+        if (resources.ContainsKey(data.inputResource.resourceName))
+        {
+            if (resources[data.inputResource.resourceName] >= data.inputResource.amount) return true;
+        }
+        return false;
     }
 
-    public void OnTurnStart()
+    public void ModifyResources(SerializedDictionary<string, int> resources)
     {
-        GameObject obj = Instantiate(unitPrefab, unitSpawnPoint.position, Quaternion.identity);
-        obj.GetComponent<ArmyUnit>().playerControlled = playerControlled;
+        if(hasRecievedInput)
+        {
+            Debug.LogError("Structure already modified resources");
+            return;
+        }
+
+        if (data.inputResource.amount !=0)
+            resources[data.inputResource.resourceName] -= data.inputResource.amount;
+
+        if (!resources.ContainsKey(data.outputResource.resourceName))
+        {
+            resources.Add(data.outputResource.resourceName, 0);
+        }
+        resources[data.outputResource.resourceName] += data.outputResource.amount;
+        hasRecievedInput = true;
     }
+
 }

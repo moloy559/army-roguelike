@@ -27,12 +27,12 @@ public class QuickSim : MonoBehaviour
         GameObject obj1 = Instantiate(unitPrefab, transform.position, Quaternion.identity);
         unit1 = obj1.GetComponent<ArmyUnit>();
         unit1.playerControlled = true;
-        unit1.GetComponent<ArmyUnit>().Fill(unitData1);
+        //unit1.GetComponent<ArmyUnit>().Fill(unitData1);
 
         GameObject obj2 = Instantiate(unitPrefab, transform.position + new Vector3(0,unitDist,0), Quaternion.identity);
         unit2 = obj2.GetComponent<ArmyUnit>();
         unit2.playerControlled = false;
-        unit2.Fill(unitData2);
+        //unit2.Fill(unitData2);
     }
 
     private void Update()

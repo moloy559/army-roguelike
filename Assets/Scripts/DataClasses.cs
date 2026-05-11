@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitData
 {
     public string name;
+    public Sprite sprite;
     public float maxHealth;
     public float attackDamage;
     public float attackSpeed;
@@ -17,8 +18,8 @@ public class UnitData
 public class StructureData
 {
     public string name;
-    public int goldCost;
     public Sprite sprite;
+    public int goldCost;
     public ResourceSet inputResource;
     public ResourceSet outputResource;
 }
