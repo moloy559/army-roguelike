@@ -11,6 +11,9 @@ public class ArmyUnit : MonoBehaviour
 
     public bool playerControlled;
 
+    [Header("Basic")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     [Header("Stats")]
     public float maxHealth = 100f;
     private float currentHealth;
@@ -41,6 +44,7 @@ public class ArmyUnit : MonoBehaviour
     [Header("Timing")]
     public float minWaitTime = 1f;
     public float maxWaitTime = 3f;
+
 
     private Lane lane;
 
@@ -84,8 +88,10 @@ public class ArmyUnit : MonoBehaviour
         attackRange = data.attackRange;
         attackSpeed = data.attackSpeed;
         moveSpeed = data.moveSpeed;
-        
+        spriteRenderer.sprite = data.sprite;
+
         this.lane = lane;
+
     }
 
     Vector2 ComputeSeparation()

@@ -27,7 +27,7 @@ public class Lane : MonoBehaviour
     [SerializedDictionary("Resource Name", "Amount")]
     public SerializedDictionary<string, int> resources; 
 
-    private List<Structure> structuresNeedingInput;
+    private List<Structure> structuresNeedingInput = new List<Structure>();
 
     private List<ArmyUnit> playerArmy = new List<ArmyUnit>();
     private List<ArmyUnit> enemyArmy = new List<ArmyUnit>();
