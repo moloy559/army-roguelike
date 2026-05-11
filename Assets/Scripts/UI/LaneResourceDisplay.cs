@@ -14,4 +14,9 @@ public class LaneResourceDisplay : MonoBehaviour
         resourceImage.sprite = sprite;
         resourceText.text = amount.ToString();
     }
+
+    public void Fill(ResourceSet resourceSet)
+    {
+        Fill(GameManager.Instance.resourceData[resourceSet.resourceName].sprite, resourceSet.amount);
+    }
 }
