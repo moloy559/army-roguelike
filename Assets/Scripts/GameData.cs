@@ -17,6 +17,7 @@ public class GameData : ScriptableObject
     public int structureTableColumnCount;
     public TextAsset structureTable;
 
+    public int resourceTableColumnCount;
     public TextAsset resourceTable;
 
 
@@ -89,6 +90,35 @@ public class GameData : ScriptableObject
         }
     }
 
+    private List<ResourceData> GetResourcesFromTable()
+    {
+        List<ResourceData> resourcesData = new List<ResourceData>();
+
+        //Split up data from csv
+        string[] data = resourceTable.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
+
+        //Divide up data into sets
+        int tableSize = data.Length / resourceTableColumnCount - 1;
+
+        for (int i = 0; i < tableSize; i++)
+        {
+            Debug.Log(data[entryAt(i, 0)]);
+            Debug.Log("sprites/" + data[entryAt(i, 1)]);
+            ResourceData resourceData = new ResourceData()
+            {
+                name = data[entryAt(i, 0)],
+                sprite = Resources.Load<Sprite>("sprites/" + data[entryAt(i, 0)]) as Sprite,
+            };
+            resourcesData.Add(resourceData);
+        }
+
+        return resourcesData;
+        int entryAt(int row, int column)
+        {
+            return (resourceTableColumnCount * (row + 1)) + column;
+        }
+    }
+
 
     [Button]
     public void GenerateData()
@@ -98,10 +128,18 @@ public class GameData : ScriptableObject
         { 
             units.Add(unitData);
         }
+        
         structures = new List<StructureData>();
         foreach (StructureData structureData in GetStructuresFromTable())
         {
             structures.Add(structureData);
         }
+
+        resources = new List<ResourceData>();
+        foreach (ResourceData resourceData in GetResourcesFromTable())
+        {
+            resources.Add(resourceData);
+        }
+
     }
 }
