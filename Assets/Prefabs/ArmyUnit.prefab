@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControlled: 0
+  spriteRenderer: {fileID: 4510903660855831945}
   maxHealth: 100
   attackDamage: 10
   attackSpeed: 1
