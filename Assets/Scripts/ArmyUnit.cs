@@ -10,6 +10,7 @@ public class ArmyUnit : MonoBehaviour
     public enum AttackType { Melee, Ranged }
 
     public bool playerControlled;
+    public bool pause = false;
 
     [Header("Basic")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -70,7 +71,7 @@ public class ArmyUnit : MonoBehaviour
     {
         if(lane == null) return;
 
-        if (GameManager.Instance.inCombat)
+        if (GameManager.Instance.inCombat && pause ==false )
         {
             HandleCombat();
         }
