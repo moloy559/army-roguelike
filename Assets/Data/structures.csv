@@ -3,8 +3,14 @@ Num Code,Name,Description,Notes,Sprite,Archetype,Rarity,Gold Cost,Resource 1 In,
 2,archer-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,3,population,1,population,2,archer,4
 3,lancer-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,3,population,1,population,2,lancer,4
 4,cavalry-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,5,population,1,population,2,cavalry,4
-5,giant,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,6,population,1,population,2,giant,1
+5,giant-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,6,population,1,population,2,giant,1
 6,assassin-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,4,population,1,population,2,assassin,2
-7,gunner-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,7,population,1,population,2,gunner,1
-8,peasant-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,0,population,3,population,2,peasant,10
-9,god-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,100,population,1,population,2,god,1
+7,soldier-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,7,population,1,population,2,gunner,4
+8,god-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,100,population,1,population,2,god,1
+9,gunner-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,7,population,1,population,2,gunner,1
+10,peasant-maker,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Martial,Common,0,population,3,population,2,peasant,10
+11,mage-tower,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Magic,Common,100,population,1,population,2,mage,1
+12,dragon-nest,makes dragon eggs. Basic dragon structure.,Ipsem lorem notes bullshit,structure,Dragon,Common,2,gems,2,population,1,egg,1
+13,dragon-hatchery,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Dragon,Common,10,egg,1,population,1,dragon,1
+15,gem-mine,basic resource structure.,Ipsem lorem notes bullshit,structure,Martial,Common,5,population,1,population,0,gems,4
+15,dragon-rider-roost,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,structure,Dragon,Uncommon,15,dragon,1,population,1,Dragon-rider,1

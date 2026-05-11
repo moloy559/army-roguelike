@@ -1,10 +1,14 @@
 Num Code,Name,Description,Notes,Sprite,Archetype,Structure,Size,Health,Attack,Attack Speed,Attack Range,Move Speed
-1,knight,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,20,3,2,0.3,2
-2,archer,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,10,3,1,1,1
-3,lancer,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,15,4,1,0.6,1.5
-4,cavalry,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,20,3,1,1.5,3
-5,giant,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,2,40,20,0.5,0.4,0.2
-6,assassin,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,10,10,3,0.3,6
-7,gunner,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,16,1,10,2,0.5
-8,peasant,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,17,0,4,0.3,1
-9,god,Ipsem lorem description bullshit,Ipsem lorem notes bullshit,unit,Martial,,1,1000,1000,10,0.4,2
+1,knight,description of the unit,notes about the unit,unit,Martial,,1,30,5,0.5,0.3,2
+2,archer,,,unit,Martial,,1,10,3,1,1,1
+3,lancer,,,unit,Martial,,1,15,4,1,0.6,1.5
+4,cavalry,,,unit,Martial,,1,20,3,1,1.5,3
+5,giant,,,unit,Martial,,2,40,20,0.5,0.4,0.2
+6,assassin,,,unit,Martial,,1,10,10,3,0.3,6
+7,soldier,,,unit,Martial,,1,12,3,2,0.5,1.5
+8,dragon,,,unit,Dragon,,2,100,5,10,1,4
+9,gunner,,,unit,Martial,,1,16,1,10,2,0.5
+10,peasant,,,unit,Martial,,1,17,0,4,0.3,1
+11,god,,,unit,Martial,,1,1000,1000,10,0.4,2
+12,dragon-rider,,,unit,Dragon,,2,120,3,10,2,4
+13,mage,,,unit,Magic,,1,5,15,1,3,1
