@@ -160,13 +160,14 @@ MonoBehaviour:
       amount: 1
   resources:
   - name: gold
-    sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+    sprite: {fileID: 21300000, guid: 1f782831b783eab4dbc6d7d4b4e60aea, type: 3}
   - name: population
-    sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
+    sprite: {fileID: 21300000, guid: d6f301d49e70f6f4d9d12abbd42fb835, type: 3}
   - name: pop-growth
-    sprite: {fileID: 21300000, guid: ee8ce5cd9c0883f4182b5cfd43cfd7fe, type: 3}
+    sprite: {fileID: 21300000, guid: 18af575e1f8e52a42896bba85bf42304, type: 3}
   unitTableColumnCount: 13
   unitTable: {fileID: 4900000, guid: 653be4f28e6ec1245905da6eff4b3ff1, type: 3}
   structureTableColumnCount: 14
   structureTable: {fileID: 4900000, guid: 8aa023ae206b9ae45a2e5764379e974b, type: 3}
-  resourceTable: {fileID: 0}
+  resourceTableColumnCount: 2
+  resourceTable: {fileID: 4900000, guid: d5fe38b2a89795e4ca36986d5e5cbcb8, type: 3}
