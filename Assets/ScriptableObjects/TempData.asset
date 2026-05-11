@@ -113,7 +113,7 @@ MonoBehaviour:
     outputResource:
       resourceName: cavalry
       amount: 4
-  - name: giant
+  - name: giant-maker
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
     inputResource:

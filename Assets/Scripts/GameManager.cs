@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI goldText;
     public TMP_Dropdown laneDropdown;
     public TMP_Dropdown structureDropDown;
-
+    public ShopItemDisplay shopItemDisplayTemp;
 
     [Header("Data")]
     public GameData data;
@@ -69,7 +69,10 @@ public class GameManager : MonoBehaviour
             
         }
         structureDropDown.AddOptions(structureOptions);
-        structureDropDown.onValueChanged.AddListener((int val) => { selectedStructure = val; });
+        structureDropDown.onValueChanged.AddListener((int val) => { 
+            selectedStructure = val;
+            shopItemDisplayTemp.Fill(structureData.ElementAt(selectedStructure).Value);
+        });
 
         laneDropdown.ClearOptions();
         List<string> laneOptions = new List<string>();

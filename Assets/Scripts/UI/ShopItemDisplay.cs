@@ -21,6 +21,7 @@ public class ShopItemDisplay : MonoBehaviour
         resourceDisplayInput.Fill(data.inputResource);
         resourceDisplayOutput.Fill(data.outputResource);
 
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
 }
