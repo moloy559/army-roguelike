@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LaneResourceDisplay : MonoBehaviour
+public class ResourceDisplay : MonoBehaviour
 {
     public Image resourceImage;
     public TextMeshProUGUI resourceText;

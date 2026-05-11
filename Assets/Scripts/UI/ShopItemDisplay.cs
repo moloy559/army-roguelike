@@ -9,8 +9,8 @@ public class ShopItemDisplay : MonoBehaviour
     public Image structureImage;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI goldCostText;
-    public LaneResourceDisplay resourceDisplayInput;
-    public LaneResourceDisplay resourceDisplayOutput;
+    public ResourceDisplay resourceDisplayInput;
+    public ResourceDisplay resourceDisplayOutput;
 
     public void Fill(StructureData data)
     {

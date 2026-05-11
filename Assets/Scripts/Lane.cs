@@ -32,7 +32,7 @@ public class Lane : MonoBehaviour
     private List<ArmyUnit> playerArmy = new List<ArmyUnit>();
     private List<ArmyUnit> enemyArmy = new List<ArmyUnit>();
 
-    private List<LaneResourceDisplay> laneResourceDisplays = new List<LaneResourceDisplay>();
+    private List<ResourceDisplay> laneResourceDisplays = new List<ResourceDisplay>();
 
     private void Start()
     {
@@ -123,7 +123,7 @@ public class Lane : MonoBehaviour
         foreach(KeyValuePair<string, int> resouceToDisplay in resources)
         {
             GameObject obj = Instantiate(resourceDisplayPrefab, resourceDisplayHolder);
-            LaneResourceDisplay laneResourceDisplay = obj.GetComponent<LaneResourceDisplay>();
+            ResourceDisplay laneResourceDisplay = obj.GetComponent<ResourceDisplay>();
             laneResourceDisplay.Fill(GameManager.Instance.resourceData[resouceToDisplay.Key].sprite, resouceToDisplay.Value);
             laneResourceDisplays.Add(laneResourceDisplay);
         }
