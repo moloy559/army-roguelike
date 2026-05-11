@@ -36,7 +36,8 @@ public class Lane : MonoBehaviour
 
     private void Start()
     {
-        
+        UpdateDisplay();
+
     }
 
     public void ResourceGeneration()

@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Data")]
-    public TempData data;
+    public GameData data;
     public int gold;
 
     public Dictionary<string, UnitData> unitData;

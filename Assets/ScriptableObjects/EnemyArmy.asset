@@ -15,6 +15,6 @@ MonoBehaviour:
   army:
     _serializedList:
     - Key: knight
-      Value: 25
+      Value: 15
     - Key: archer
-      Value: 25
+      Value: 15
