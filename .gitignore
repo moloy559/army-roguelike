@@ -106,4 +106,5 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
 #Lockfiles
-*.xlsx#
+/[Aa]ssets/Data/.~lock*
+

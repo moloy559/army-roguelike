@@ -15,10 +15,18 @@ public class UnitData
     public float moveSpeed;
 }
 
+public enum Rarity
+{
+    Common,
+    Uncommon,
+    Rare
+}
+
 [System.Serializable]
 public class StructureData
 {
     public string name;
+    public Rarity rarity;
     public Sprite sprite;
     public int goldCost;
     public ResourceSet inputResource;
@@ -46,4 +54,16 @@ public class ArmySetData
 
     [SerializedDictionary("Unit Name", "Amount")]
     public SerializedDictionary<string, int> army;
+}
+
+[System.Serializable]
+public class ShopGenerationData
+{
+    public int round;
+
+    public float commonWeight;
+    public float uncommonWeight;
+    public float rareWeight;
+    public bool forcedUncommon;
+    public bool forcedRare;
 }
