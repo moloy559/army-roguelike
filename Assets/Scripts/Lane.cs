@@ -8,12 +8,13 @@ public class Lane : MonoBehaviour
 {
     [Header("Enemy Settings")]
     public GameObject enemyUnitPrefab;
-    public TempArmySet enemyArmySet;
     public Transform enemyUnitSpawnPoint;
 
     [Header("Player Settings")]
     public GameObject unitPrefab;
     public Transform unitSpawnPoint;
+    
+    public ArmyUnit spire;
 
     public GameObject structurePrefab;
     public Transform structureSpawnPoint;
@@ -41,6 +42,7 @@ public class Lane : MonoBehaviour
         purchaseButton.gameObject.SetActive(false);
         ShopManager.Instance.onSelectStructure += OnStructureSelected;
         ShopManager.Instance.onShopReset += OnShopReset;
+        spire.SetLane(this);
     }
 
     private void OnDestroy()
@@ -61,8 +63,9 @@ public class Lane : MonoBehaviour
         ClearArmy(enemyArmy);
 
         SpawnArmy(resources, unitPrefab, unitSpawnPoint, true, playerArmy);
+        playerArmy.Add(spire);
 
-        SpawnArmy(enemyArmySet.army, enemyUnitPrefab, enemyUnitSpawnPoint, false, enemyArmy);
+        SpawnArmy(GameManager.Instance.GetArmy().army, enemyUnitPrefab, enemyUnitSpawnPoint, false, enemyArmy);
 
         UpdateDisplay();
     }
@@ -96,6 +99,7 @@ public class Lane : MonoBehaviour
 
     private void ClearArmy(List<ArmyUnit> units)
     {
+        if(units.Contains(spire)) units.Remove(spire);
         for (int i = units.Count - 1; i >= 0; i--)
         {
             if (units[i] != null) Destroy(units[i].gameObject);

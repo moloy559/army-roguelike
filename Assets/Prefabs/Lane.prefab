@@ -81,10 +81,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyUnitPrefab: {fileID: 8188346444525101395, guid: 54de8416d09b3924e99bb21adbe1c435, type: 3}
-  enemyArmySet: {fileID: 11400000, guid: 1fd08a7584fade64690a29bfe4987c8e, type: 2}
   enemyUnitSpawnPoint: {fileID: 7040141220940682769}
   unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
   unitSpawnPoint: {fileID: 4513881573278535796}
+  spire: {fileID: 8456820563683683392}
   structurePrefab: {fileID: 7389166693106356919, guid: 904706e2f15e2a2458776d5e5e261fd4, type: 3}
   structureSpawnPoint: {fileID: 6185040128519045998}
   structureSpawnRadius: 0.6
@@ -371,6 +371,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8685577767318892136}
   - component: {fileID: 5423911785890856074}
+  - component: {fileID: 8456820563683683392}
+  - component: {fileID: 2383965418955555544}
   m_Layer: 0
   m_Name: temp-spire
   m_TagString: Untagged
@@ -445,6 +447,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8456820563683683392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368961024212776949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f33051e5e6c9e4591bdaf8f8f25ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControlled: 1
+  pause: 0
+  spriteRenderer: {fileID: 5423911785890856074}
+  maxHealth: 100
+  attackDamage: 15
+  attackSpeed: 1
+  attackType: 1
+  attackRange: 2
+  moveSpeed: 0
+  stoppingDistance: 0.1
+  separationRadius: 0.3
+  separationStrength: 2
+  wanderRadius: 0
+  minWaitTime: 1
+  maxWaitTime: 3
+--- !u!58 &2383965418955555544
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368961024212776949}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.72
 --- !u!1 &6848025678280432344
 GameObject:
   m_ObjectHideFlags: 0

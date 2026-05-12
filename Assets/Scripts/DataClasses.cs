@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 [System.Serializable]
@@ -38,3 +39,11 @@ public class ResourceData
     public Sprite sprite;
 }
 
+[System.Serializable]
+public class ArmySetData
+{
+    public int round;
+
+    [SerializedDictionary("Unit Name", "Amount")]
+    public SerializedDictionary<string, int> army;
+}

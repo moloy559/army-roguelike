@@ -1,0 +1,15 @@
+ArmyID,Round,Unit 1,Unit 1 Count,Unit 2,Unit 2 Count
+1,0,peasant,1,,0
+2,1,knight,1,,0
+3,2,knight,1,archer,2
+4,3,knight,2,archer,2
+5,4,knight,3,archer,2
+6,5,knight,4,archer,2
+7,6,knight,5,archer,2
+8,7,knight,6,archer,4
+9,8,knight,7,archer,4
+10,9,knight,8,archer,4
+11,10,knight,9,archer,4
+12,11,knight,10,archer,4
+13,12,knight,11,archer,8
+14,13,knight,12,archer,8

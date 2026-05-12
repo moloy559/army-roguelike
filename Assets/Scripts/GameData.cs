@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="GameData",menuName = "GameData/GameData", order = 1)] [ExecuteInEditMode]
 public class GameData : ScriptableObject
 {
+    [Header("Generated Data")]
     public List<UnitData> units;
     public List<StructureData> structures;
     public List<ResourceData> resources;
+    public List<ArmySetData> armySets;
 
+    [Header("Files For Generation")]
     public int unitTableColumnCount;
     public TextAsset unitTable;
 
@@ -20,103 +24,129 @@ public class GameData : ScriptableObject
     public int resourceTableColumnCount;
     public TextAsset resourceTable;
 
+    public int armySetTableColumnCount;
+    public TextAsset armySetTable;
+
+    private string[] GetTableData(TextAsset table)
+    {
+        return table.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
+    }
+
+    private int GetEntryIndex(int row, int column, int columnCount)
+    {
+        return (columnCount * (row + 1)) + column;
+    }
+
+    private int GetTableSize(string[] data, int columnCount)
+    {
+        return data.Length / columnCount - 1;
+    }
 
     private List<UnitData> GetUnitsFromTable()
     {
-        List<UnitData> unitsTable = new List<UnitData>();
+        List<UnitData> unitsTable = new();
+        string[] data = GetTableData(unitTable);
 
-        //Split up data from csv
-        string[] data = unitTable.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
-
-        //Divide up data into sets
-        int tableSize = data.Length / unitTableColumnCount - 1;
-
-        for (int i = 0; i < tableSize; i++)
+        for (int i = 0; i < GetTableSize(data, unitTableColumnCount); i++)
         {
-            UnitData unitData = new UnitData()
+            unitsTable.Add(new UnitData()
             {
-                name = data[entryAt(i, 1)],
-                sprite = Resources.Load<Sprite>("sprites/" + data[entryAt(i, 4)]) as Sprite,
-                maxHealth = float.Parse(data[entryAt(i, 8)]),
-                attackDamage = float.Parse(data[entryAt(i, 9)]),
-                attackSpeed = float.Parse(data[entryAt(i, 10)]),
-                attackRange = float.Parse(data[entryAt(i, 11)]),
-                moveSpeed = float.Parse(data[entryAt(i, 12)])
-            };
-            unitsTable.Add(unitData);
+                name = data[GetEntryIndex(i, 1, unitTableColumnCount)],
+                sprite = Resources.Load<Sprite>("sprites/" + data[GetEntryIndex(i, 4, unitTableColumnCount)]),
+                maxHealth = float.Parse(data[GetEntryIndex(i, 8, unitTableColumnCount)]),
+                attackDamage = float.Parse(data[GetEntryIndex(i, 9, unitTableColumnCount)]),
+                attackSpeed = float.Parse(data[GetEntryIndex(i, 10, unitTableColumnCount)]),
+                attackRange = float.Parse(data[GetEntryIndex(i, 11, unitTableColumnCount)]),
+                moveSpeed = float.Parse(data[GetEntryIndex(i, 12, unitTableColumnCount)])
+            });
         }
 
         return unitsTable;
-        int entryAt(int row, int column)
-        {
-            return (unitTableColumnCount * (row + 1)) + column;
-        }
     }
 
     private List<StructureData> GetStructuresFromTable()
     {
-        List<StructureData> structuresData = new List<StructureData>();
+        List<StructureData> structuresData = new();
+        string[] data = GetTableData(structureTable);
 
-        //Split up data from csv
-        string[] data = structureTable.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
-
-        //Divide up data into sets
-        int tableSize = data.Length / structureTableColumnCount - 1;
-
-        for (int i = 0; i < tableSize; i++)
+        for (int i = 0; i < GetTableSize(data, structureTableColumnCount); i++)
         {
-            StructureData structureData = new StructureData()
+            structuresData.Add(new StructureData()
             {
-                name = data[entryAt(i, 1)],
-                sprite = Resources.Load<Sprite>("sprites/" + data[entryAt(i, 4)]) as Sprite,
-                goldCost = int.Parse(data[entryAt(i, 7)]),
-                inputResource = new ResourceSet(){ 
-                    resourceName = data[entryAt(i,8)],
-                    amount = int.Parse(data[entryAt(i,9)]),
-                    },
+                name = data[GetEntryIndex(i, 1, structureTableColumnCount)],
+                sprite = Resources.Load<Sprite>("sprites/" + data[GetEntryIndex(i, 4, structureTableColumnCount)]),
+                goldCost = int.Parse(data[GetEntryIndex(i, 7, structureTableColumnCount)]),
+
+                inputResource = new ResourceSet()
+                {
+                    resourceName = data[GetEntryIndex(i, 8, structureTableColumnCount)],
+                    amount = int.Parse(data[GetEntryIndex(i, 9, structureTableColumnCount)])
+                },
+
                 outputResource = new ResourceSet()
                 {
-                    resourceName = data[entryAt(i,12)],
-                    amount = int.Parse(data[entryAt(i,13)]),
+                    resourceName = data[GetEntryIndex(i, 12, structureTableColumnCount)],
+                    amount = int.Parse(data[GetEntryIndex(i, 13, structureTableColumnCount)])
                 }
-            };
-            structuresData.Add(structureData);
+            });
         }
 
         return structuresData;
-        int entryAt(int row, int column)
-        {
-            return (structureTableColumnCount * (row + 1)) + column;
-        }
     }
 
     private List<ResourceData> GetResourcesFromTable()
     {
-        List<ResourceData> resourcesData = new List<ResourceData>();
+        List<ResourceData> resourcesData = new();
+        string[] data = GetTableData(resourceTable);
 
-        //Split up data from csv
-        string[] data = resourceTable.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
-
-        //Divide up data into sets
-        int tableSize = data.Length / resourceTableColumnCount - 1;
-
-        for (int i = 0; i < tableSize; i++)
+        for (int i = 0; i < GetTableSize(data, resourceTableColumnCount); i++)
         {
-            ResourceData resourceData = new ResourceData()
+            resourcesData.Add(new ResourceData()
             {
-                name = data[entryAt(i, 0)],
-                sprite = Resources.Load<Sprite>("sprites/" + (data[entryAt(i, 1)]).Trim('\r', '\n')) as Sprite,
-            };
-            resourcesData.Add(resourceData);
+                name = data[GetEntryIndex(i, 0, resourceTableColumnCount)],
+                sprite = Resources.Load<Sprite>(
+                    "sprites/" + data[GetEntryIndex(i, 1, resourceTableColumnCount)].Trim('\r', '\n'))
+            });
         }
 
         return resourcesData;
-        int entryAt(int row, int column)
-        {
-            return (resourceTableColumnCount * (row + 1)) + column;
-        }
     }
 
+    private List<ArmySetData> GetArmySetsFromTable()
+    {
+        List<ArmySetData> armySetsData = new();
+        string[] data = GetTableData(armySetTable);
+
+        for (int i = 0; i < GetTableSize(data, armySetTableColumnCount); i++)
+        {
+            armySetsData.Add(new ArmySetData()
+            {
+                round = int.Parse(data[GetEntryIndex(i, 1, armySetTableColumnCount)]),
+                army = MakeArmy(i)
+            });
+        }
+
+        SerializedDictionary<string, int> MakeArmy(int index)
+        {
+            SerializedDictionary<string, int> armySet = new SerializedDictionary<string, int>();
+            armySet.Add(
+                data[GetEntryIndex(index, 2, armySetTableColumnCount)],
+                int.Parse(data[GetEntryIndex(index, 3, armySetTableColumnCount)])
+                );
+
+            int army2Count = int.Parse(data[GetEntryIndex(index, 5, armySetTableColumnCount)]);
+
+            if (army2Count > 0) 
+            {
+                armySet.Add(
+                    data[GetEntryIndex(index, 4, armySetTableColumnCount)],
+                    army2Count
+                );
+            }
+            return armySet;
+        }
+        return armySetsData;
+    }
 
     [Button]
     public void GenerateData()
@@ -137,6 +167,12 @@ public class GameData : ScriptableObject
         foreach (ResourceData resourceData in GetResourcesFromTable())
         {
             resources.Add(resourceData);
+        }
+
+        armySets = new List<ArmySetData>();
+        foreach (ArmySetData armySetData in GetArmySetsFromTable())
+        {
+            armySets.Add(armySetData);
         }
 
     }
