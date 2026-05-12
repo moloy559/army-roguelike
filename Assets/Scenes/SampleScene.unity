@@ -360,43 +360,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18161945}
   m_CullTransparentMesh: 1
---- !u!1 &57605637 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5368961024212776949, guid: 3bb9801a2b35a0d4bbf1aed61c60e44d, type: 3}
-  m_PrefabInstance: {fileID: 421842190}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &57605639 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 5423911785890856074, guid: 3bb9801a2b35a0d4bbf1aed61c60e44d, type: 3}
-  m_PrefabInstance: {fileID: 421842190}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &57605640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 57605637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f33051e5e6c9e4591bdaf8f8f25ef2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerControlled: 1
-  pause: 0
-  spriteRenderer: {fileID: 57605639}
-  maxHealth: 100
-  attackDamage: 15
-  attackSpeed: 1
-  attackType: 1
-  attackRange: 2
-  moveSpeed: 0
-  stoppingDistance: 0.1
-  separationRadius: 0.3
-  separationStrength: 2
-  wanderRadius: 0
-  minWaitTime: 1
-  maxWaitTime: 3
 --- !u!1001 &103403942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1030,10 +993,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5368961024212776949, guid: 3bb9801a2b35a0d4bbf1aed61c60e44d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 57605640}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb9801a2b35a0d4bbf1aed61c60e44d, type: 3}
 --- !u!1 &439879853
 GameObject:
