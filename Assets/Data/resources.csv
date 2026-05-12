@@ -1,6 +1,7 @@
 Name,Sprite
-gold,Resource.png
-population,Resource.png
-pop-growth,Resource.png
-egg,Resource.png
-gems,Resource.png
+gold,gold
+population,population
+pop-growth,pop-growth
+egg,egg
+gems,gems
+gold-income,gold-income
