@@ -15,6 +15,7 @@ public class Lane : MonoBehaviour
     public Transform unitSpawnPoint;
     
     public ArmyUnit spire;
+    public float spireRegen = 15f;
 
     public GameObject structurePrefab;
     public Transform structureSpawnPoint;
@@ -25,6 +26,8 @@ public class Lane : MonoBehaviour
     public RectTransform resourceDisplayHolder;
     public GameObject resourceDisplayPrefab;
     public Button purchaseButton;
+
+    public GameObject levelButtonsHolder;
 
     [SerializedDictionary("Resource Name", "Amount")]
     public SerializedDictionary<string, int> resources; 
@@ -40,6 +43,7 @@ public class Lane : MonoBehaviour
     {
         UpdateDisplay();
         purchaseButton.gameObject.SetActive(false);
+        levelButtonsHolder.SetActive(false);
         ShopManager.Instance.onSelectStructure += OnStructureSelected;
         ShopManager.Instance.onShopReset += OnShopReset;
         spire.SetLane(this);
@@ -54,10 +58,19 @@ public class Lane : MonoBehaviour
 
     public void ResourceGeneration()
     {
+        levelButtonsHolder.SetActive(false);
         GameManager.Instance.Gold += resources["gold"];
         int popGrowth = resources["pop-growth"];
         resources["population"] += popGrowth;
-
+        if (resources.ContainsKey("gem-income"))
+        {
+            if (!resources.ContainsKey("gems"))
+            {
+                resources.Add("gems", 0);
+            }
+            int gemIncome = resources["gem-income"];
+            resources["gems"] += gemIncome;
+        }
         ClearArmy(playerArmy);
 
         ClearArmy(enemyArmy);
@@ -67,7 +80,36 @@ public class Lane : MonoBehaviour
 
         SpawnArmy(GameManager.Instance.GetArmy().army, enemyUnitPrefab, enemyUnitSpawnPoint, false, enemyArmy);
 
+        float missingHp =  spire.maxHealth - spire.CurrentHealth;
+        if (missingHp > spireRegen)
+        {
+            spire.TakeDamage(-spireRegen);
+        }
+        else
+        {
+            spire.TakeDamage(-missingHp);
+        }
+
         UpdateDisplay();
+    }
+
+    public void CityLevelUp()
+    {
+        levelButtonsHolder.SetActive(true);
+    }
+
+    public void ButtonAddResource(string resourceName)
+    {
+        if (resources.ContainsKey(resourceName))
+        {
+            resources[resourceName] += 1;
+        }
+        else
+        {
+            resources.Add(resourceName, 1);
+        }
+        UpdateDisplay();
+        levelButtonsHolder.SetActive(false);
     }
 
     public List<ArmyUnit> GetArmy(bool playeControlled)
