@@ -23,6 +23,7 @@ public class Lane : MonoBehaviour
     [Header("UI")]
     public RectTransform resourceDisplayHolder;
     public GameObject resourceDisplayPrefab;
+    public Button purchaseButton;
 
     [SerializedDictionary("Resource Name", "Amount")]
     public SerializedDictionary<string, int> resources; 
@@ -37,12 +38,21 @@ public class Lane : MonoBehaviour
     private void Start()
     {
         UpdateDisplay();
+        purchaseButton.gameObject.SetActive(false);
+        ShopManager.Instance.onSelectStructure += OnStructureSelected;
+        ShopManager.Instance.onShopReset += OnShopReset;
+    }
+
+    private void OnDestroy()
+    {
+        ShopManager.Instance.onSelectStructure -= OnStructureSelected;
+        ShopManager.Instance.onShopReset -= OnShopReset;
 
     }
 
     public void ResourceGeneration()
     {
-        GameManager.Instance.gold += resources["gold"];
+        GameManager.Instance.Gold += resources["gold"];
         int popGrowth = resources["pop-growth"];
         resources["population"] += popGrowth;
 
@@ -128,6 +138,45 @@ public class Lane : MonoBehaviour
             laneResourceDisplays.Add(laneResourceDisplay);
         }
 
+        TryUpdateStructures();
         LayoutRebuilder.ForceRebuildLayoutImmediate(resourceDisplayHolder);
     }
+
+    private void TryUpdateStructures()
+    {
+        int unusedStructures = structuresNeedingInput.Count;
+        foreach (Structure structure in structuresNeedingInput)
+        {
+            if (structure.CanGiveOutput(resources))
+            {
+                structure.ModifyResources(resources);
+            }
+        }
+
+        for (int i = structuresNeedingInput.Count - 1; i >= 0; i--)
+        {
+            if (structuresNeedingInput[i].HasRecievedInput)
+            {
+                structuresNeedingInput.RemoveAt(i);
+            }
+        }
+        if (structuresNeedingInput.Count != unusedStructures) UpdateDisplay();
+    }
+
+    private void OnStructureSelected(StructureData structureData)
+    {
+        purchaseButton.gameObject.SetActive(true);
+    }
+
+    private void OnShopReset()
+    {
+        purchaseButton.gameObject.SetActive(false);
+    }
+
+    public void PurchaseFromShop()
+    {
+        AddStructure(ShopManager.Instance.selectedStructure);
+        ShopManager.Instance.PurchaseSelectedItem();
+    }
+
 }
