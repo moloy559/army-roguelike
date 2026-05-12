@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI goldText;
-    public TMP_Dropdown laneDropdown;
-    public TMP_Dropdown structureDropDown;
+    public TextMeshProUGUI roundText;
 
     [Header("Data")]
     public GameData data;
     [SerializeField] private int gold;
     public int Gold { get { return gold; } set { gold = value; UpdateText(); } }
+    [SerializeField] private int round;
+    public int Round { get { return round; } set { round = value;} }
+
 
     public Dictionary<string, UnitData> unitData;
     public Dictionary<string, StructureData> structureData;
@@ -65,11 +67,25 @@ public class GameManager : MonoBehaviour
         UpdateText();
     }
 
+    public ArmySetData GetArmy()
+    {
+        List<ArmySetData> possibleArmies = new();
+
+        foreach(ArmySetData armySet in data.armySets)
+        {
+            if (armySet.round == round) possibleArmies.Add(armySet);
+        }
+
+        if (possibleArmies.Count == 0) return data.armySets.Last();
+
+        return possibleArmies[Random.Range(0, possibleArmies.Count)];
+    }
 
 
     public void TurnStart()
     {
         foreach (Lane lane in lanes) lane.ResourceGeneration();
+        round++;
 
         UpdateText();
     }
@@ -95,6 +111,7 @@ public class GameManager : MonoBehaviour
     public void UpdateText()
     {
         goldText.text = gold + " gold";
+        roundText.text = "Round: " + round;
     }
 
 }

@@ -94,6 +94,10 @@ public class ArmyUnit : MonoBehaviour
         this.lane = lane;
 
     }
+    public void SetLane(Lane lane)
+    {
+        this.lane = lane;
+    }
 
     Vector2 ComputeSeparation()
     {
