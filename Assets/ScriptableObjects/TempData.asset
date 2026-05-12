@@ -15,9 +15,9 @@ MonoBehaviour:
   units:
   - name: knight
     sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
-    maxHealth: 20
-    attackDamage: 3
-    attackSpeed: 2
+    maxHealth: 30
+    attackDamage: 5
+    attackSpeed: 0.5
     attackRange: 0.3
     moveSpeed: 2
   - name: archer
@@ -55,6 +55,20 @@ MonoBehaviour:
     attackSpeed: 3
     attackRange: 0.3
     moveSpeed: 6
+  - name: soldier
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 12
+    attackDamage: 3
+    attackSpeed: 2
+    attackRange: 0.5
+    moveSpeed: 1.5
+  - name: dragon
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 100
+    attackDamage: 5
+    attackSpeed: 10
+    attackRange: 1
+    moveSpeed: 4
   - name: gunner
     sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 16
@@ -76,6 +90,20 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 0.4
     moveSpeed: 2
+  - name: dragon-rider
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 120
+    attackDamage: 3
+    attackSpeed: 10
+    attackRange: 2
+    moveSpeed: 4
+  - name: mage
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 5
+    attackDamage: 15
+    attackSpeed: 1
+    attackRange: 3
+    moveSpeed: 1
   structures:
   - name: knight-maker
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
@@ -131,6 +159,24 @@ MonoBehaviour:
     outputResource:
       resourceName: assassin
       amount: 2
+  - name: soldier-maker
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 7
+    inputResource:
+      resourceName: population
+      amount: 1
+    outputResource:
+      resourceName: gunner
+      amount: 4
+  - name: god-maker
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 100
+    inputResource:
+      resourceName: population
+      amount: 1
+    outputResource:
+      resourceName: god
+      amount: 1
   - name: gunner-maker
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 7
@@ -149,14 +195,50 @@ MonoBehaviour:
     outputResource:
       resourceName: peasant
       amount: 10
-  - name: god-maker
+  - name: mage-tower
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 100
     inputResource:
       resourceName: population
       amount: 1
     outputResource:
-      resourceName: god
+      resourceName: mage
+      amount: 1
+  - name: dragon-nest
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 2
+    inputResource:
+      resourceName: gems
+      amount: 2
+    outputResource:
+      resourceName: egg
+      amount: 1
+  - name: dragon-hatchery
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 10
+    inputResource:
+      resourceName: egg
+      amount: 1
+    outputResource:
+      resourceName: dragon
+      amount: 1
+  - name: gem-mine
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 5
+    inputResource:
+      resourceName: population
+      amount: 1
+    outputResource:
+      resourceName: gems
+      amount: 4
+  - name: dragon-rider-roost
+    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
+    goldCost: 15
+    inputResource:
+      resourceName: dragon
+      amount: 1
+    outputResource:
+      resourceName: Dragon-rider
       amount: 1
   resources:
   - name: gold
@@ -165,6 +247,10 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: d6f301d49e70f6f4d9d12abbd42fb835, type: 3}
   - name: pop-growth
     sprite: {fileID: 21300000, guid: 18af575e1f8e52a42896bba85bf42304, type: 3}
+  - name: egg
+    sprite: {fileID: 21300000, guid: 0dfcc5e8b7bee834aae5dac948c2cd1c, type: 3}
+  - name: gems
+    sprite: {fileID: 21300000, guid: 09a533c35e096e940af3b6bd2097a427, type: 3}
   unitTableColumnCount: 13
   unitTable: {fileID: 4900000, guid: 653be4f28e6ec1245905da6eff4b3ff1, type: 3}
   structureTableColumnCount: 14
