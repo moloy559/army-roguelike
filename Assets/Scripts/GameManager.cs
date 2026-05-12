@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
     [Header("Game")]
     public bool inCombat;
     public List<Lane> lanes;
@@ -18,17 +17,15 @@ public class GameManager : MonoBehaviour
     public TMP_Dropdown laneDropdown;
     public TMP_Dropdown structureDropDown;
 
-
     [Header("Data")]
     public GameData data;
-    public int gold;
+    [SerializeField] private int gold;
+    public int Gold { get { return gold; } set { gold = value; UpdateText(); } }
 
     public Dictionary<string, UnitData> unitData;
     public Dictionary<string, StructureData> structureData;
     public Dictionary<string, ResourceData> resourceData;
 
-    private int selectedLane = 0;
-    private int selectedStructure = 0;
 
 
     private void Awake()
@@ -39,6 +36,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Setting up dictionaries
+        #region Set up dictionaries
+        
         unitData = new Dictionary<string, UnitData>();
         foreach(UnitData unitD in data.units)
         {
@@ -60,36 +60,12 @@ public class GameManager : MonoBehaviour
         {
             resourceData.Add(unitD.name, new ResourceData() { name = unitD.name, sprite = unitD.sprite});
         }
-
-        structureDropDown.ClearOptions();
-        List<string> structureOptions = new List<string>();
-        for (int i = 0; i < structureData.Count; i++) 
-        {
-            structureOptions.Add(structureData.ElementAt(i).Key);
-            
-        }
-        structureDropDown.AddOptions(structureOptions);
-        structureDropDown.onValueChanged.AddListener((int val) => { selectedStructure = val; });
-
-        laneDropdown.ClearOptions();
-        List<string> laneOptions = new List<string>();
-
-        laneOptions.Add("Left");
-        laneOptions.Add("Middle");
-        laneOptions.Add("Right");
-        laneDropdown.AddOptions(laneOptions);
-        laneDropdown.onValueChanged.AddListener((int val) => { selectedLane = val; });
+        #endregion
 
         UpdateText();
     }
 
-    public void AddStructureToLane()
-    {
-        StructureData structureD = structureData.ElementAt(selectedStructure).Value;
-        gold -= structureD.goldCost;
-        lanes[selectedLane].AddStructure(structureD);
-        UpdateText();
-    }
+
 
     public void TurnStart()
     {
@@ -103,7 +79,20 @@ public class GameManager : MonoBehaviour
         inCombat = !inCombat;
     }
 
-    private void UpdateText()
+    public void ToggleShop()
+    {
+        if (ShopManager.Instance.Open)
+        {
+            ShopManager.Instance.CloseShop();
+        }
+        else
+        {
+            ShopManager.Instance.OpenShop();
+        }
+ 
+    }
+
+    public void UpdateText()
     {
         goldText.text = gold + " gold";
     }

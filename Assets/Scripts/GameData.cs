@@ -102,12 +102,10 @@ public class GameData : ScriptableObject
 
         for (int i = 0; i < tableSize; i++)
         {
-            Debug.Log(data[entryAt(i, 0)]);
-            Debug.Log("sprites/" + data[entryAt(i, 1)]);
             ResourceData resourceData = new ResourceData()
             {
                 name = data[entryAt(i, 0)],
-                sprite = Resources.Load<Sprite>("sprites/" + data[entryAt(i, 0)]) as Sprite,
+                sprite = Resources.Load<Sprite>("sprites/" + (data[entryAt(i, 1)]).Trim('\r', '\n')) as Sprite,
             };
             resourcesData.Add(resourceData);
         }
