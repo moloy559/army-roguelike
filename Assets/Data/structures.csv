@@ -10,20 +10,20 @@ Num Code,Name,Description,Notes,Sprite,Archetype,Rarity,Gold Cost,Resource 1 In,
 9,gunsmith,Description,notes,structure,Martial,Common,7,population,1,population,2,gunner,1
 10,peasant-homes,Description,notes,structure,Peasantry,Common,1,population,5,population,2,peasant,5
 11,mage-tower,Description,notes,structure,Magic,Common,5,gems,2,population,1,mage,1
-12,dragon-nest,Description,notes,structure,Dragon,Common,2,gems,3,population,1,egg,1
+12,dragon-nest,Description,notes,structure,Dragon,Common,2,gems,2,population,1,egg,1
 13,dragon-hatchery,Description,notes,structure,Dragon,Common,10,egg,1,population,1,dragon,1
-15,gem-mine,Description,notes,structure,Peasantry,Common,5,population,1,population,0,gems,2
+15,gem-mine,Description,notes,structure,Peasantry,Common,5,population,1,population,0,gem-income,1
 16,dragon-rider-roost,Description,notes,structure,Dragon,Uncommon,15,dragon,1,population,1,dragon-rider,1
 17,farm,Description,notes,structure,Peasantry,Common,2,population,1,population,0,pop-growth,1
-18,gold-mine,Description,notes,structure,Peasantry,Common,2,population,1,population,0,gold-income,1
+18,gold-mine,Description,notes,structure,Peasantry,Common,2,population,1,population,0,gold,1
 19,granary,Description,notes,structure,Peasantry,Uncommon,3,population,1,peasant,2,pop-growth,2
-20,treasury,Description,notes,structure,Peasantry,Uncommon,4,population,1,peasant,2,gold-income,2
+20,trading-post,Description,notes,structure,Peasantry,Uncommon,4,population,1,peasant,2,gold,2
 21,hunters-lodge,Description,this is a long sentence. I am testing if this breaks. We will see,structure,Peasantry,Common,1,population,5,population,0,hunter,10
 22,mill,Description,notes,structure,Peasantry,Rare,7,population,1,peasant,3,pop-growth,3
-23,trading-post,Description,notes,structure,Peasantry,Rare,8,population,1,peasant,3,gold-income,3
+23,treasury,Description,notes,structure,Peasantry,Rare,8,population,1,peasant,3,gold,3
 24,mage-academy,Description,notes,structure,Magic,Uncommon,6,gems,3,population,3,mage,3
-25,bigger-mage-tower,Description,notes,structure,Magic,Uncommon,6,gems,1,population,1,archmage,1
-26,crystal-refinery,Description,notes,structure,Magic,Uncommon,10,population,2,population,0,gems,5
+25,bigger-mage-tower,Description,notes,structure,Magic,Uncommon,8,gems,2,population,1,archmage,1
+26,crystal-refinery,Description,notes,structure,Magic,Uncommon,10,population,2,population,0,gem-income,3
 27,mage-university,Description,notes,structure,Magic,Rare,10,gems,3,population,3,archmage,3
 28,work-house,Description,notes,structure,Peasantry,Uncommon,3,population,15,population,2,peasant,20
 29,peasant-lodge,Description,notes,structure,Peasantry,Rare,6,population,20,population,2,peasant,30
