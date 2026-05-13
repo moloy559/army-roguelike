@@ -97,6 +97,10 @@ public class GameManager : MonoBehaviour
         round++;
 
         UpdateText();
+        if(round%3 == 0)
+        {
+            foreach (Lane lane in lanes) lane.CityLevelUp();
+        }
     }
 
     public void ToggleCombat()
