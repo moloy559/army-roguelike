@@ -6,10 +6,10 @@ ArmyID,Round,Unit 1,Unit 1 Count,Unit 2,Unit 2 Count
 5,4,knight,3,archer,2
 6,5,knight,4,archer,2
 7,6,knight,5,archer,2
-8,7,knight,6,archer,4
-9,8,knight,7,archer,4
+8,7,knight,6,archer,3
+9,8,knight,7,archer,3
 10,9,knight,8,archer,4
 11,10,knight,9,archer,4
-12,11,knight,10,archer,4
-13,12,knight,11,archer,8
+12,11,knight,10,archer,5
+13,12,knight,11,archer,6
 14,13,knight,12,archer,8

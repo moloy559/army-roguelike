@@ -29,8 +29,6 @@ public class StructureData
     public Rarity rarity;
     public Sprite sprite;
     public int goldCost;
-    public ResourceSet inputResource;
-    public ResourceSet outputResource;
     public ResourceTransaction transaction;
 }
 
