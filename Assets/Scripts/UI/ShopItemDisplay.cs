@@ -13,12 +13,18 @@ public class ShopItemDisplay : MonoBehaviour
 
     public ResourceDisplay resourceDisplayInput;
     public ResourceDisplay resourceDisplayOutput;
+
+    public Transform resourceDisplayHolder;
+    public GameObject resourceDisplayPrefab;
+    public Transform breaker;
+
     [SerializeField]
     private Toggle toggle;
 
     private StructureData structureData;
     private bool purchased;
 
+    private List<GameObject> displays = new();
   
     public void Fill(StructureData data)
     {
@@ -31,14 +37,31 @@ public class ShopItemDisplay : MonoBehaviour
 
         rarityText.text = data.rarity.ToString();
 
-        resourceDisplayInput.Fill(data.inputResource);
-        resourceDisplayOutput.Fill(data.outputResource);
+        for (int i = displays.Count - 1; i >= 0; i--)
+        {
+            if (displays[i] != null) Destroy(displays[i]);
+        }
+        displays.Clear();
+
+        foreach (ResourceSet inputSet in data.transaction.inputResources) AddDisplay(inputSet);
+        breaker.transform.SetAsLastSibling();
+        foreach (ResourceSet outputSet in data.transaction.outputResources) AddDisplay(outputSet);
+
+        //resourceDisplayInput.Fill(data.inputResource);
+        //resourceDisplayOutput.Fill(data.outputResource);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         CheckAfford();
 
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(OnToggled);
+    }
+
+    private void AddDisplay(ResourceSet resourceSet)
+    {
+        GameObject newObj = Instantiate(resourceDisplayPrefab, resourceDisplayHolder);
+        newObj.GetComponent<ResourceDisplay>().Fill(resourceSet);
+        displays.Add(newObj);
     }
 
     public void CheckPurchased(StructureData structureData)

@@ -1069,6 +1069,9 @@ MonoBehaviour:
   rarityText: {fileID: 4750718987929774947}
   resourceDisplayInput: {fileID: 4093321889481188980}
   resourceDisplayOutput: {fileID: 6309564365907318939}
+  resourceDisplayHolder: {fileID: 7008527976830979232}
+  resourceDisplayPrefab: {fileID: 7585313400908870551, guid: b86a2b892f59d914583ec3bef43ba10e, type: 3}
+  breaker: {fileID: 229924058786789590}
   toggle: {fileID: 7009181921709275706}
 --- !u!114 &7009181921709275706
 MonoBehaviour:
@@ -1246,6 +1249,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaneResourceDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 7585313400908870551, guid: b86a2b892f59d914583ec3bef43ba10e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1394,6 +1401,10 @@ PrefabInstance:
     - target: {fileID: 7585313400908870551, guid: b86a2b892f59d914583ec3bef43ba10e, type: 3}
       propertyPath: m_Name
       value: LaneResourceDisplay (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585313400908870551, guid: b86a2b892f59d914583ec3bef43ba10e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

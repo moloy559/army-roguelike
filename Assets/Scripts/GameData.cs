@@ -57,6 +57,65 @@ public class GameData : ScriptableObject
         return data.Length / columnCount - 1;
     }
 
+    private Dictionary<string, string> ParseExtraData(string data)
+    {
+        Dictionary<string, string> result = new();
+
+        foreach (string pair in data.Split(';'))
+        {
+            if (string.IsNullOrWhiteSpace(pair))
+                continue;
+
+            string[] split = pair.Split('=');
+
+            result.Add(split[0], split[1]);
+        }
+
+        return result;
+    }
+    private ResourceTransaction ParseTransaction(string data)
+    {
+        ResourceTransaction transaction = new()
+        {
+            inputResources = new(),
+            outputResources = new()
+        };
+
+        foreach (string section in data.Split(';'))
+        {
+            string[] split = section.Split('=');
+
+            string key = split[0];
+            string value = split[1];
+
+            if (key == "input")
+                transaction.inputResources = ParseResourceList(value);
+
+            else if (key == "output")
+                transaction.outputResources = ParseResourceList(value);
+        }
+
+        return transaction;
+    }
+
+    private List<ResourceSet> ParseResourceList(string data)
+    {
+        List<ResourceSet> list = new();
+
+        foreach (string resource in data.Split('|'))
+        {
+            string[] split = resource.Split(':');
+
+            list.Add(new ResourceSet()
+            {
+                resourceName = split[0],
+                amount = int.Parse(split[1])
+            });
+        }
+
+        return list;
+    }
+
     private List<UnitData> GetUnitsFromTable()
     {
         List<UnitData> units = new();
@@ -116,7 +175,9 @@ public class GameData : ScriptableObject
                 {
                     resourceName = GetValue(data, headers, i, "Resource Out"),
                     amount = int.Parse(GetValue(data, headers, i, "Output Value"))
-                }
+                },
+
+                transaction = ParseTransaction(GetValue(data, headers, i, "Transaction"))
             });
         }
 
