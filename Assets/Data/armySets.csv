@@ -1,5 +1,5 @@
 ArmyID,Round,Unit 1,Unit 1 Count,Unit 2,Unit 2 Count
-1,0,peasant,1,,0
+1,0,population,1,,0
 2,1,knight,1,,0
 3,2,knight,1,archer,2
 4,3,knight,2,archer,2

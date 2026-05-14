@@ -6,11 +6,11 @@ Num Code,Name,Description,Notes,Sprite,Archetype,Structure,Size,Health,Attack,At
 5,giant,description of the unit,notes about the unit,unit,Martial,,2,65,30,0.5,0.4,0.2
 6,assassin,description of the unit,notes about the unit,unit,Martial,,1,10,10,3,0.3,6
 7,soldier,description of the unit,notes about the unit,unit,Martial,,1,12,3,2,0.5,1.5
-8,dragon,description of the unit,notes about the unit,unit,Dragon,,2,100,5,10,1,4
+8,dragon,description of the unit,notes about the unit,unit,Dragon,,2,150,10,10,1,4
 9,gunner,description of the unit,notes about the unit,unit,Martial,,1,16,1,10,2,0.5
-10,peasant,description of the unit,notes about the unit,unit,Peasantry,,1,10,0.25,4,0.3,1
+10,population,description of the unit,notes about the unit,unit,Peasantry,,1,10,0.25,4,0.3,1
 11,god,debug tool,debug tool,unit,Martial,,1,1000,1000,10,0.4,2
-12,dragon-rider,description of the unit,notes about the unit,unit,Dragon,,2,120,3,10,2,4
+12,dragon-rider,description of the unit,notes about the unit,unit,Dragon,,2,180,12,10,2,4
 13,mage,description of the unit,notes about the unit,unit,Magic,,1,5,15,2,3,1
 14,hunter,description of the unit,notes about the unit,unit,Peasantry,,1,8,0.5,3,1.8,1
 15,archmage,description of the unit,notes about the unit,unit,Magic,,1,8,30,3,4,1
