@@ -25,12 +25,24 @@ public class Structure : MonoBehaviour
 
     public bool CanGiveOutput(SerializedDictionary<string, int> resources)
     {
-        if (data.inputResource.amount == 0) return true;
-        if (resources.ContainsKey(data.inputResource.resourceName))
-        {
-            if (resources[data.inputResource.resourceName] >= data.inputResource.amount) return true;
+        if (data.transaction.inputResources.Count == 0) return true;
+        foreach (ResourceSet input in data.transaction.inputResources) 
+        { 
+            if (!resources.ContainsKey(input.resourceName))
+            {
+                if (input.amount > 0) return false;
+            }
+            else
+            {
+                if (resources[input.resourceName] < input.amount)
+                {
+                    return false;
+                } 
+            }
+            
         }
-        return false;
+
+        return true;
     }
 
     public void ModifyResources(SerializedDictionary<string, int> resources)
@@ -41,14 +53,20 @@ public class Structure : MonoBehaviour
             return;
         }
 
-        if (data.inputResource.amount !=0)
-            resources[data.inputResource.resourceName] -= data.inputResource.amount;
-
-        if (!resources.ContainsKey(data.outputResource.resourceName))
+        foreach (ResourceSet input in data.transaction.inputResources)
         {
-            resources.Add(data.outputResource.resourceName, 0);
+            resources[input.resourceName] -= input.amount;
         }
-        resources[data.outputResource.resourceName] += data.outputResource.amount;
+
+        foreach (ResourceSet output in data.transaction.outputResources)
+        {
+            if (!resources.ContainsKey(output.resourceName))
+            {
+                resources.Add(output.resourceName, 0);
+            }
+            resources[output.resourceName] += output.amount;
+        }
+
         hasRecievedInput = true;
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spire : ArmyUnit
 {
     public bool amCentralSpire;
-    protected override void Die()
+    public override void Die()
     {
         gameObject.SetActive(false);
         if (amCentralSpire)

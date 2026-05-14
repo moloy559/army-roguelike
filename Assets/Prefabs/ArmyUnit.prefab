@@ -101,6 +101,8 @@ MonoBehaviour:
   playerControlled: 0
   pause: 0
   spriteRenderer: {fileID: 4510903660855831945}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  enemyColor: {r: 0.9137255, g: 0.5568628, b: 0.5568628, a: 1}
   maxHealth: 100
   attackDamage: 10
   attackSpeed: 1
@@ -113,6 +115,11 @@ MonoBehaviour:
   wanderRadius: 2.28
   minWaitTime: 1
   maxWaitTime: 3
+  cohesionStrength: 0.35
+  alignmentStrength: 0.69
+  frontlineResistance: 0.62
+  engagementSlowMultiplier: 0.15
+  currentAttackers: 0
 --- !u!58 &4050879258689474070
 CircleCollider2D:
   m_ObjectHideFlags: 0

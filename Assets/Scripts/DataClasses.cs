@@ -29,8 +29,7 @@ public class StructureData
     public Rarity rarity;
     public Sprite sprite;
     public int goldCost;
-    public ResourceSet inputResource;
-    public ResourceSet outputResource;
+    public ResourceTransaction transaction;
 }
 
 [System.Serializable]
@@ -38,6 +37,13 @@ public struct ResourceSet
 {
     public string resourceName;
     public int amount; 
+}
+
+[System.Serializable]
+public class ResourceTransaction
+{
+    public List<ResourceSet> inputResources;
+    public List<ResourceSet> outputResources;
 }
 
 [System.Serializable]

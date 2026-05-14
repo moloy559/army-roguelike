@@ -29,42 +29,146 @@ public class GameData : ScriptableObject
 
     private Dictionary<string, int> GetHeaders(TextAsset table)
     {
-        string[] headers = table.text.Split('\n')[0].Split(',');
+        List<string[]> rows = ParseCSV(table.text);
 
         Dictionary<string, int> map = new();
 
-        for (int i = 0; i < headers.Length; i++)
-            map.Add(headers[i].Trim(), i);
+        for (int i = 0; i < rows[0].Length; i++)
+            map.Add(rows[0][i].Trim(), i);
 
         return map;
     }
 
-    private string[] GetTableData(TextAsset table)
+    private List<string[]> GetTableData(TextAsset table)
     {
-        return table.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
+        return ParseCSV(table.text);
     }
 
-    private string GetValue(string[] data, Dictionary<string, int> headers, int row, string columnName)
+    private List<string[]> ParseCSV(string csv)
     {
-        int columnCount = headers.Count;
-        int column = headers[columnName];
+        List<string[]> rows = new();
 
-        return data[(columnCount * (row + 1)) + column].Trim('\r', '\n');
+        List<string> currentRow = new();
+        System.Text.StringBuilder currentCell = new();
+
+        bool inQuotes = false;
+
+        foreach (char c in csv)
+        {
+            switch (c)
+            {
+                case '"':
+                    inQuotes = !inQuotes;
+                    break;
+
+                case ',' when !inQuotes:
+                    currentRow.Add(currentCell.ToString());
+                    currentCell.Clear();
+                    break;
+
+                case '\n' when !inQuotes:
+                    currentRow.Add(currentCell.ToString().Trim('\r'));
+
+                    rows.Add(currentRow.ToArray());
+
+                    currentRow = new();
+                    currentCell.Clear();
+                    break;
+
+                default:
+                    currentCell.Append(c);
+                    break;
+            }
+        }
+
+        // Final cell
+        currentRow.Add(currentCell.ToString().Trim('\r'));
+
+        // Only add if not empty
+        if (currentRow.Count > 0 && !(currentRow.Count == 1 && string.IsNullOrWhiteSpace(currentRow[0])))
+            rows.Add(currentRow.ToArray());
+
+        return rows;
     }
 
-    private int GetTableSize(string[] data, int columnCount)
+    private string GetValue(List<string[]> data, Dictionary<string, int> headers, int row, string columnName)
     {
-        return data.Length / columnCount - 1;
+        return data[row + 1][headers[columnName]]
+        .Trim('\r', '\n');
+    }
+
+    private int GetTableSize(List<string[]> data, int columnCount)
+    {
+        return data.Count - 1;
+    }
+
+    private Dictionary<string, string> ParseExtraData(string data)
+    {
+        Dictionary<string, string> result = new();
+
+        foreach (string pair in data.Split(';'))
+        {
+            if (string.IsNullOrWhiteSpace(pair))
+                continue;
+
+            string[] split = pair.Split('=');
+
+            result.Add(split[0], split[1]);
+        }
+
+        return result;
+    }
+    private ResourceTransaction ParseTransaction(string data)
+    {
+        ResourceTransaction transaction = new()
+        {
+            inputResources = new(),
+            outputResources = new()
+        };
+
+        foreach (string section in data.Replace("\r", "").Replace("\n", "").Split(';'))
+        {
+            string[] split = section.Split('=');
+
+            string key = split[0];
+            string value = split[1];
+
+            if (key == "input")
+                transaction.inputResources = ParseResourceList(value);
+
+            else if (key == "output")
+                transaction.outputResources = ParseResourceList(value);
+        }
+
+        return transaction;
+    }
+
+    private List<ResourceSet> ParseResourceList(string data)
+    {
+        List<ResourceSet> list = new();
+
+        foreach (string resource in data.Split('|'))
+        {
+            string[] split = resource.Split(':');
+
+            list.Add(new ResourceSet()
+            {
+                resourceName = split[0],
+                amount = int.Parse(split[1])
+            });
+        }
+
+        return list;
     }
 
     private List<UnitData> GetUnitsFromTable()
     {
         List<UnitData> units = new();
 
-        string[] data = GetTableData(unitTable);
+        List<string[]> data = GetTableData(unitTable);
         Dictionary<string, int> headers = GetHeaders(unitTable);
 
-        int tableSize = data.Length / headers.Count - 1;
+        int tableSize = GetTableSize(data, headers.Count);
 
         for (int i = 0; i < tableSize; i++)
         {
@@ -87,7 +191,7 @@ public class GameData : ScriptableObject
     {
         List<StructureData> structuresData = new();
 
-        string[] data = GetTableData(structureTable);
+        List<string[]> data = GetTableData(structureTable);
         Dictionary<string, int> headers = GetHeaders(structureTable);
 
         int tableSize = GetTableSize(data, headers.Count);
@@ -106,17 +210,7 @@ public class GameData : ScriptableObject
                 goldCost = int.Parse(
                     GetValue(data, headers, i, "Gold Cost")),
 
-                inputResource = new ResourceSet()
-                {
-                    resourceName = GetValue(data, headers, i, "Resource 1 In"),
-                    amount = int.Parse(GetValue(data, headers, i, "Input 1 Value"))
-                },
-
-                outputResource = new ResourceSet()
-                {
-                    resourceName = GetValue(data, headers, i, "Resource Out"),
-                    amount = int.Parse(GetValue(data, headers, i, "Output Value"))
-                }
+                transaction = ParseTransaction(GetValue(data, headers, i, "Transaction"))
             });
         }
 
@@ -127,7 +221,7 @@ public class GameData : ScriptableObject
     {
         List<ResourceData> resourcesData = new();
 
-        string[] data = GetTableData(resourceTable);
+        List<string[]> data = GetTableData(resourceTable);
         Dictionary<string, int> headers = GetHeaders(resourceTable);
 
         int tableSize = GetTableSize(data, headers.Count);
@@ -150,7 +244,7 @@ public class GameData : ScriptableObject
     {
         List<ArmySetData> armySetsData = new();
 
-        string[] data = GetTableData(armySetTable);
+        List<string[]> data = GetTableData(armySetTable);
         Dictionary<string, int> headers = GetHeaders(armySetTable);
 
         int tableSize = GetTableSize(data, headers.Count);
@@ -194,7 +288,7 @@ public class GameData : ScriptableObject
     {
         List<ShopGenerationData> resourcesData = new();
 
-        string[] data = GetTableData(shopGenerationTable);
+        List<string[]> data = GetTableData(shopGenerationTable);
         Dictionary<string, int> headers = GetHeaders(shopGenerationTable);
 
         int tableSize = GetTableSize(data, headers.Count);
@@ -230,6 +324,7 @@ public class GameData : ScriptableObject
             structures.Add(structureData);
         }
 
+        
         resources = new List<ResourceData>();
         foreach (ResourceData resourceData in GetResourcesFromTable())
         {
