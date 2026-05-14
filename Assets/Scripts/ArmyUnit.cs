@@ -231,7 +231,7 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
-    void Die()
+    protected virtual void Die()
     {
         Destroy(gameObject);
     }
