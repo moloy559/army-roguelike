@@ -14,7 +14,7 @@ public class Lane : MonoBehaviour
     public GameObject unitPrefab;
     public Transform unitSpawnPoint;
     
-    public ArmyUnit spire;
+    public Spire spire;
     public float spireRegen = 15f;
 
     public GameObject structurePrefab;
@@ -39,6 +39,9 @@ public class Lane : MonoBehaviour
 
     private List<ResourceDisplay> laneResourceDisplays = new List<ResourceDisplay>();
 
+    private int repairTimer = 0;
+    public int turnsToRepair;
+
     private void Start()
     {
         UpdateDisplay();
@@ -58,6 +61,22 @@ public class Lane : MonoBehaviour
 
     public void ResourceGeneration()
     {
+        ClearArmy(playerArmy);
+
+        ClearArmy(enemyArmy); 
+        if (spire.CurrentHealth <= 0)
+        {
+            repairTimer++;
+            if (repairTimer < turnsToRepair)
+            {
+                UpdateDisplay();
+                return;
+            }
+            repairTimer = 0;
+            spire.TakeDamage(-spireRegen);
+            spire.gameObject.SetActive(true);
+        }
+
         levelButtonsHolder.SetActive(false);
         GameManager.Instance.Gold += resources["gold"];
         int popGrowth = resources["pop-growth"];
@@ -71,10 +90,7 @@ public class Lane : MonoBehaviour
             int gemIncome = resources["gem-income"];
             resources["gems"] += gemIncome;
         }
-        ClearArmy(playerArmy);
-
-        ClearArmy(enemyArmy);
-
+        
         SpawnArmy(resources, unitPrefab, unitSpawnPoint, true, playerArmy);
         playerArmy.Add(spire);
 
