@@ -452,10 +452,97 @@ MonoBehaviour:
   - round: 0
     army:
       _serializedList:
+      - Key: peasant
+        Value: 1
+  - round: 1
+    army:
+      _serializedList:
       - Key: knight
-        Value: 200
+        Value: 1
+  - round: 2
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 1
       - Key: archer
-        Value: 200
+        Value: 2
+  - round: 3
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 2
+      - Key: archer
+        Value: 2
+  - round: 4
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 3
+      - Key: archer
+        Value: 2
+  - round: 5
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 4
+      - Key: archer
+        Value: 2
+  - round: 6
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 5
+      - Key: archer
+        Value: 2
+  - round: 7
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 6
+      - Key: archer
+        Value: 3
+  - round: 8
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 7
+      - Key: archer
+        Value: 3
+  - round: 9
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 8
+      - Key: archer
+        Value: 4
+  - round: 10
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 9
+      - Key: archer
+        Value: 4
+  - round: 11
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 10
+      - Key: archer
+        Value: 5
+  - round: 12
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 11
+      - Key: archer
+        Value: 6
+  - round: 13
+    army:
+      _serializedList:
+      - Key: knight
+        Value: 12
+      - Key: archer
+        Value: 8
   shopGenerations:
   - round: 0
     commonWeight: 1
