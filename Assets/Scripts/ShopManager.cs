@@ -36,19 +36,74 @@ public class ShopManager : MonoBehaviour
     {
         shopHolder.SetActive(true);
 
-        List<int> used = new();
+        ShopGenerationData genData = GameManager.Instance.GetShopGeneration();
+
+        List<StructureData> used = new();
+
+        bool shouldForceUncommon = genData.forcedUncommon;
+        bool shouldForceRare = genData.forcedRare;
 
         foreach (ShopItemDisplay item in shopItems)
         {
-            int structIndex;
-            do structIndex = Random.Range(0, GameManager.Instance.structureData.Count);
-            while (used.Contains(structIndex));
+            Rarity rarity;
+            if (shouldForceUncommon)
+            {
+                rarity = Rarity.Uncommon;
+                shouldForceUncommon = false;
+            }
+            else if (shouldForceRare) 
+            { 
+                rarity = Rarity.Rare;
+                shouldForceRare = false;
+            }
+            else
+            {
+                rarity = GetRandomRarity(genData);
+            }
 
-            used.Add(structIndex);
-            item.Fill(GameManager.Instance.structureData.ElementAt(structIndex).Value);
+            List<StructureData> validStructures =
+                GameManager.Instance.structureData.Values
+                .Where(x => x.rarity == rarity && !used.Contains(x))
+                .ToList();
+
+            // if none exist of chosen rarity
+            if (validStructures.Count == 0)
+            {
+                validStructures =
+                    GameManager.Instance.structureData.Values
+                    .Where(x => !used.Contains(x))
+                    .ToList();
+            }
+
+            StructureData chosen =
+                validStructures[Random.Range(0, validStructures.Count)];
+
+            used.Add(chosen);
+
+            item.Fill(chosen);
         }
 
         open = true;
+    }
+
+    private Rarity GetRandomRarity(ShopGenerationData data)
+    {
+        float total =
+            data.commonWeight +
+            data.uncommonWeight +
+            data.rareWeight;
+
+        float roll = Random.value * total;
+
+        if (roll < data.commonWeight)
+            return Rarity.Common;
+
+        roll -= data.commonWeight;
+
+        if (roll < data.uncommonWeight)
+            return Rarity.Uncommon;
+
+        return Rarity.Rare;
     }
 
     public void CloseShop() 

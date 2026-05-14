@@ -13,28 +13,43 @@ public class GameData : ScriptableObject
     public List<StructureData> structures;
     public List<ResourceData> resources;
     public List<ArmySetData> armySets;
+    public List<ShopGenerationData> shopGenerations;
 
     [Header("Files For Generation")]
-    public int unitTableColumnCount;
+    //public int unitTableColumnCount;
     public TextAsset unitTable;
 
-    public int structureTableColumnCount;
     public TextAsset structureTable;
 
-    public int resourceTableColumnCount;
     public TextAsset resourceTable;
 
-    public int armySetTableColumnCount;
     public TextAsset armySetTable;
+
+    public TextAsset shopGenerationTable;
+
+    private Dictionary<string, int> GetHeaders(TextAsset table)
+    {
+        string[] headers = table.text.Split('\n')[0].Split(',');
+
+        Dictionary<string, int> map = new();
+
+        for (int i = 0; i < headers.Length; i++)
+            map.Add(headers[i].Trim(), i);
+
+        return map;
+    }
 
     private string[] GetTableData(TextAsset table)
     {
         return table.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
     }
 
-    private int GetEntryIndex(int row, int column, int columnCount)
+    private string GetValue(string[] data, Dictionary<string, int> headers, int row, string columnName)
     {
-        return (columnCount * (row + 1)) + column;
+        int columnCount = headers.Count;
+        int column = headers[columnName];
+
+        return data[(columnCount * (row + 1)) + column].Trim('\r', '\n');
     }
 
     private int GetTableSize(string[] data, int columnCount)
@@ -44,49 +59,63 @@ public class GameData : ScriptableObject
 
     private List<UnitData> GetUnitsFromTable()
     {
-        List<UnitData> unitsTable = new();
-        string[] data = GetTableData(unitTable);
+        List<UnitData> units = new();
 
-        for (int i = 0; i < GetTableSize(data, unitTableColumnCount); i++)
+        string[] data = GetTableData(unitTable);
+        Dictionary<string, int> headers = GetHeaders(unitTable);
+
+        int tableSize = data.Length / headers.Count - 1;
+
+        for (int i = 0; i < tableSize; i++)
         {
-            unitsTable.Add(new UnitData()
+            units.Add(new UnitData()
             {
-                name = data[GetEntryIndex(i, 1, unitTableColumnCount)],
-                sprite = Resources.Load<Sprite>("sprites/" + data[GetEntryIndex(i, 4, unitTableColumnCount)]),
-                maxHealth = float.Parse(data[GetEntryIndex(i, 8, unitTableColumnCount)]),
-                attackDamage = float.Parse(data[GetEntryIndex(i, 9, unitTableColumnCount)]),
-                attackSpeed = float.Parse(data[GetEntryIndex(i, 10, unitTableColumnCount)]),
-                attackRange = float.Parse(data[GetEntryIndex(i, 11, unitTableColumnCount)]),
-                moveSpeed = float.Parse(data[GetEntryIndex(i, 12, unitTableColumnCount)])
+                name = GetValue(data, headers, i, "Name"),
+                sprite = Resources.Load<Sprite>("sprites/" + GetValue(data, headers, i, "Sprite")),
+                maxHealth = float.Parse(GetValue(data, headers, i, "Health")),
+                attackDamage = float.Parse(GetValue(data, headers, i, "Attack")),
+                attackSpeed = float.Parse(GetValue(data, headers, i, "Attack Speed")),
+                attackRange = float.Parse(GetValue(data, headers, i, "Attack Range")),
+                moveSpeed = float.Parse(GetValue(data, headers, i, "Move Speed"))
             });
         }
 
-        return unitsTable;
+        return units;
     }
 
     private List<StructureData> GetStructuresFromTable()
     {
         List<StructureData> structuresData = new();
-        string[] data = GetTableData(structureTable);
 
-        for (int i = 0; i < GetTableSize(data, structureTableColumnCount); i++)
+        string[] data = GetTableData(structureTable);
+        Dictionary<string, int> headers = GetHeaders(structureTable);
+
+        int tableSize = GetTableSize(data, headers.Count);
+
+        for (int i = 0; i < tableSize; i++)
         {
             structuresData.Add(new StructureData()
             {
-                name = data[GetEntryIndex(i, 1, structureTableColumnCount)],
-                sprite = Resources.Load<Sprite>("sprites/" + data[GetEntryIndex(i, 4, structureTableColumnCount)]),
-                goldCost = int.Parse(data[GetEntryIndex(i, 7, structureTableColumnCount)]),
+                name = GetValue(data, headers, i, "Name"),
+
+                sprite = Resources.Load<Sprite>(
+                    "sprites/" + GetValue(data, headers, i, "Sprite")),
+
+                rarity = Enum.Parse<Rarity>(GetValue(data, headers, i, "Rarity")),
+
+                goldCost = int.Parse(
+                    GetValue(data, headers, i, "Gold Cost")),
 
                 inputResource = new ResourceSet()
                 {
-                    resourceName = data[GetEntryIndex(i, 8, structureTableColumnCount)],
-                    amount = int.Parse(data[GetEntryIndex(i, 9, structureTableColumnCount)])
+                    resourceName = GetValue(data, headers, i, "Resource 1 In"),
+                    amount = int.Parse(GetValue(data, headers, i, "Input 1 Value"))
                 },
 
                 outputResource = new ResourceSet()
                 {
-                    resourceName = data[GetEntryIndex(i, 12, structureTableColumnCount)],
-                    amount = int.Parse(data[GetEntryIndex(i, 13, structureTableColumnCount)])
+                    resourceName = GetValue(data, headers, i, "Resource Out"),
+                    amount = int.Parse(GetValue(data, headers, i, "Output Value"))
                 }
             });
         }
@@ -97,15 +126,20 @@ public class GameData : ScriptableObject
     private List<ResourceData> GetResourcesFromTable()
     {
         List<ResourceData> resourcesData = new();
-        string[] data = GetTableData(resourceTable);
 
-        for (int i = 0; i < GetTableSize(data, resourceTableColumnCount); i++)
+        string[] data = GetTableData(resourceTable);
+        Dictionary<string, int> headers = GetHeaders(resourceTable);
+
+        int tableSize = GetTableSize(data, headers.Count);
+
+        for (int i = 0; i < tableSize; i++)
         {
             resourcesData.Add(new ResourceData()
             {
-                name = data[GetEntryIndex(i, 0, resourceTableColumnCount)],
+                name = GetValue(data, headers, i, "Name"),
+
                 sprite = Resources.Load<Sprite>(
-                    "sprites/" + data[GetEntryIndex(i, 1, resourceTableColumnCount)].Trim('\r', '\n'))
+                    "sprites/" + GetValue(data, headers, i, "Sprite"))
             });
         }
 
@@ -115,37 +149,70 @@ public class GameData : ScriptableObject
     private List<ArmySetData> GetArmySetsFromTable()
     {
         List<ArmySetData> armySetsData = new();
-        string[] data = GetTableData(armySetTable);
 
-        for (int i = 0; i < GetTableSize(data, armySetTableColumnCount); i++)
+        string[] data = GetTableData(armySetTable);
+        Dictionary<string, int> headers = GetHeaders(armySetTable);
+
+        int tableSize = GetTableSize(data, headers.Count);
+
+        for (int i = 0; i < tableSize; i++)
         {
             armySetsData.Add(new ArmySetData()
             {
-                round = int.Parse(data[GetEntryIndex(i, 1, armySetTableColumnCount)]),
+                round = int.Parse(GetValue(data, headers, i, "Round")),
                 army = MakeArmy(i)
             });
         }
 
+        return armySetsData;
+
         SerializedDictionary<string, int> MakeArmy(int index)
         {
-            SerializedDictionary<string, int> armySet = new SerializedDictionary<string, int>();
+            SerializedDictionary<string, int> armySet = new();
+
             armySet.Add(
-                data[GetEntryIndex(index, 2, armySetTableColumnCount)],
-                int.Parse(data[GetEntryIndex(index, 3, armySetTableColumnCount)])
-                );
+                GetValue(data, headers, index, "Unit 1"),
+                int.Parse(GetValue(data, headers, index, "Unit 1 Count"))
+            );
 
-            int army2Count = int.Parse(data[GetEntryIndex(index, 5, armySetTableColumnCount)]);
+            int army2Count = int.Parse(
+                GetValue(data, headers, index, "Unit 2 Count"));
 
-            if (army2Count > 0) 
+            if (army2Count > 0)
             {
                 armySet.Add(
-                    data[GetEntryIndex(index, 4, armySetTableColumnCount)],
+                    GetValue(data, headers, index, "Unit 2"),
                     army2Count
                 );
             }
+
             return armySet;
         }
-        return armySetsData;
+    }
+
+    private List<ShopGenerationData> GetShopGenerationFromTable()
+    {
+        List<ShopGenerationData> resourcesData = new();
+
+        string[] data = GetTableData(shopGenerationTable);
+        Dictionary<string, int> headers = GetHeaders(shopGenerationTable);
+
+        int tableSize = GetTableSize(data, headers.Count);
+
+        for (int i = 0; i < tableSize; i++)
+        {
+            resourcesData.Add(new ShopGenerationData()
+            {
+                round = int.Parse(GetValue(data, headers, i, "Round")),
+                commonWeight = float.Parse(GetValue(data, headers, i, "Common Weight")),
+                uncommonWeight = float.Parse(GetValue(data, headers, i, "Uncommon Weight")),
+                rareWeight = float.Parse(GetValue(data, headers, i, "Rare Weight")),
+                forcedUncommon = (int.Parse(GetValue(data, headers, i, "Forced Uncommon")) == 1),
+                forcedRare = (int.Parse(GetValue(data, headers, i, "Forced Rare")) == 1),
+            });
+        }
+
+        return resourcesData;
     }
 
     [Button]
@@ -175,5 +242,10 @@ public class GameData : ScriptableObject
             armySets.Add(armySetData);
         }
 
+        shopGenerations = new List<ShopGenerationData>();
+        foreach (ShopGenerationData shopGenerationData in GetShopGenerationFromTable())
+        {
+            shopGenerations.Add(shopGenerationData);
+        }
     }
 }

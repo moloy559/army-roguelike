@@ -84,6 +84,15 @@ public class GameManager : MonoBehaviour
         return possibleArmies[Random.Range(0, possibleArmies.Count)];
     }
 
+    public ShopGenerationData GetShopGeneration()
+    {
+        foreach(ShopGenerationData shopGenerationData in data.shopGenerations)
+        {
+            if (shopGenerationData.round == round) return shopGenerationData;
+        }
+        return data.shopGenerations.Last();
+    }
+
 
     public void TurnStart()
     {
