@@ -90,17 +90,18 @@ public class GameManager : MonoBehaviour
         return data.shopGenerations.Last();
     }
 
-
+    int levelingLane = 0;
     public void TurnStart()
     {
         foreach (Lane lane in lanes) lane.ResourceGeneration();
         round++;
 
         UpdateText();
-        if(round%3 == 0)
-        {
-            foreach (Lane lane in lanes) lane.CityLevelUp();
-        }
+        
+        lanes[levelingLane].CityLevelUp();
+
+        levelingLane++;
+        if(levelingLane >= lanes.Count) levelingLane = 0;
     }
 
     public void ToggleCombat()
