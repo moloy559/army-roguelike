@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 public class ArmyUnit : MonoBehaviour
@@ -14,6 +15,8 @@ public class ArmyUnit : MonoBehaviour
 
     [Header("Basic")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color enemyColor;
 
     [Header("Stats")]
     public float maxHealth = 100f;
@@ -56,32 +59,36 @@ public class ArmyUnit : MonoBehaviour
 
     private Collider2D[] nearbyUnits = new Collider2D[32];
 
+    private Transform cachedTransform;
+
     private float retargetTimer;
-    
+    float attackRangeSqr;
 
     void Start()
     {
+        cachedTransform = transform;
         spawnPosition = transform.position;
         PickNewTarget();
         currentHealth = maxHealth;
         retargetTimer = Random.Range(0f, 0.15f);
+        attackRangeSqr = attackRange * attackRange;
     }
 
-    private void Update()
+    private void OldUpdate()
     {
         if(lane == null) return;
 
         if (GameManager.Instance.inCombat && pause == false)
         {
-            HandleCombat();
+            //HandleCombat();
         }
         else
         {
-            HandleWander();
+            //HandleWander();
         }
     }
 
-    public void Fill(UnitData data, Lane lane)
+    public void Fill(UnitData data, Lane lane, bool playerControlled, Vector2 spawnPoint)
     {
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
@@ -91,14 +98,28 @@ public class ArmyUnit : MonoBehaviour
         moveSpeed = data.moveSpeed;
         spriteRenderer.sprite = data.sprite;
 
+        attackRangeSqr = attackRange * attackRange;
+
+        this.playerControlled = playerControlled;
+        spriteRenderer.color = playerControlled ? normalColor : enemyColor;
+        
         this.lane = lane;
 
+        transform.position = spawnPoint;
+        this.spawnPosition = spawnPoint;
+
+        PickNewTarget();
+        retargetTimer = Random.Range(0f, 0.15f);
+
+        nearbyUnits = new Collider2D[32];
     }
+
     public void SetLane(Lane lane)
     {
         this.lane = lane;
     }
-
+    #region // Old
+    
     Vector2 ComputeSeparation()
     {
         Vector2 force = Vector2.zero;
@@ -137,31 +158,48 @@ public class ArmyUnit : MonoBehaviour
         return force * separationStrength;
     }
 
-    void HandleCombat()
+    public void HandleCombat(float deltaTime)
     {
-        attackCooldown -= Time.deltaTime;
-        retargetTimer -= Time.deltaTime;
+        attackCooldown -= deltaTime;
+        retargetTimer -= deltaTime;
+
+        Vector2 myPos = cachedTransform.position;
 
         if (retargetTimer <= 0f)
         {
-            currentTarget = FindClosestEnemy();
+           if (currentTarget == null || !currentTarget.gameObject.activeSelf)
+            {
+                currentTarget = FindClosestEnemy();
+            }
+            else
+            {
+                Vector2 offset =
+                    (Vector2)currentTarget.cachedTransform.position - myPos;
+
+                if (offset.sqrMagnitude > attackRangeSqr)
+                {
+                    currentTarget = FindClosestEnemy();
+                }
+            }
+
             retargetTimer = 0.15f;
         }
 
         if (currentTarget == null)
-        {
             return;
-        }
 
-        float distance = Vector2.Distance(transform.position, currentTarget.transform.position);
+        Vector2 targetOffset =
+            (Vector2)currentTarget.cachedTransform.position - myPos;
 
-        if (distance <= attackRange)
+        float sqrDist = targetOffset.sqrMagnitude;
+
+        if (sqrDist <= attackRangeSqr)
         {
             AttackTarget();
         }
         else
         {
-            MoveTowardsTarget();
+            MoveTowardsTarget(deltaTime, targetOffset, sqrDist);
         }
     }
 
@@ -172,11 +210,12 @@ public class ArmyUnit : MonoBehaviour
 
         Vector2 myPos = transform.position;
 
-
+        
         foreach (var unit in lane.GetArmy(!playerControlled))
         {
             if (unit == null) continue;
             if (unit == this) continue;
+            
             Vector2 offset = (Vector2)unit.transform.position - myPos;
 
             float sqrDist = offset.sqrMagnitude;
@@ -191,15 +230,19 @@ public class ArmyUnit : MonoBehaviour
         return closest;
     }
 
-    void MoveTowardsTarget()
+    private void MoveTowardsTarget(float deltaTime, Vector2 direction, float sqrDist)
     {
-        Vector2 toTarget = (currentTarget.transform.position - transform.position).normalized;
+        if (sqrDist <= 0.001f)
+            return;
+
+        direction /= Mathf.Sqrt(sqrDist);
 
         Vector2 separation = ComputeSeparation();
 
-        Vector2 finalDirection = (toTarget + separation).normalized;
+        Vector2 finalDirection = (direction + separation).normalized;
 
-        transform.position += (Vector3)(finalDirection * moveSpeed * Time.deltaTime);
+        cachedTransform.position +=
+            (Vector3)(finalDirection * moveSpeed * deltaTime);
     }
 
     void AttackTarget()
@@ -221,8 +264,338 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
+    #endregion
+
+    /// -------------
+    /// Experimental Code
+    /// -------------
+
+    #region
+    /*
+    [SerializeField] float cohesionStrength = 0.35f;
+    [SerializeField] float alignmentStrength = 0.2f;
+    [SerializeField] float frontlineResistance = 0.5f;
+    [SerializeField] float engagementSlowMultiplier = 0.15f;
+
+
+    private Vector2 currentVelocity;
+    //private List<ArmyUnit> cachedEnemyArmy;
+
+    public int currentAttackers = 0;
+
+    private struct SteeringData
+    {
+        public Vector2 separation;
+        public Vector2 cohesion;
+        public Vector2 alignment;
+        public float localDensity;
+    }
+
+    public void HandleCombat(float deltaTime)
+    {
+        attackCooldown -= deltaTime;
+        retargetTimer -= deltaTime;
+
+        Vector2 myPos = cachedTransform.position;
+
+        // ----------------------------
+        // TARGETING
+        // ----------------------------
+
+        if (retargetTimer <= 0f)
+        {
+            if (
+                currentTarget == null ||
+                !currentTarget.gameObject.activeSelf
+            )
+            {
+                SetTarget(FindBestEnemy());
+            }
+
+            retargetTimer = Random.Range(0.2f, 0.45f);
+        }
+
+        if (currentTarget == null)
+            return;
+
+        Vector2 targetOffset =
+            (Vector2)currentTarget.cachedTransform.position - myPos;
+
+        float sqrDist = targetOffset.sqrMagnitude;
+
+        bool inRange = sqrDist <= attackRangeSqr;
+
+        // ----------------------------
+        // FRONTLINE LOCKING
+        // ----------------------------
+
+        if (inRange)
+        {
+            AttackTarget();
+
+            // Hold position more while fighting
+            if (Random.value < engagementSlowMultiplier)
+            {
+                MoveTowardsTarget(
+                    deltaTime,
+                    targetOffset,
+                    sqrDist,
+                    true
+                );
+            }
+
+            return;
+        }
+
+        MoveTowardsTarget(
+            deltaTime,
+            targetOffset,
+            sqrDist,
+            false
+        );
+    }
+
+    private void SetTarget(ArmyUnit newTarget)
+    {
+        if (currentTarget != null)
+        {
+            currentTarget.currentAttackers--;
+        }
+
+        currentTarget = newTarget;
+
+        if (currentTarget != null)
+        {
+            currentTarget.currentAttackers++;
+        }
+    }
+
+    ArmyUnit FindBestEnemy()
+    {
+        ArmyUnit best = null;
+
+        float bestScore = Mathf.Infinity;
+
+        Vector2 myPos = cachedTransform.position;
+
+        List<ArmyUnit> enemies =
+            lane.GetArmy(!playerControlled);
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            ArmyUnit unit = enemies[i];
+
+            if (unit == null)
+                continue;
+
+            if (!unit.gameObject.activeSelf)
+                continue;
+
+            Vector2 offset =
+                (Vector2)unit.cachedTransform.position - myPos;
+
+            float sqrDist = offset.sqrMagnitude;
+
+            // ----------------------------
+            // TARGET SATURATION
+            // ----------------------------
+
+            float attackerPenalty =
+                unit.currentAttackers * 2f;
+
+            // Prefer enemies already engaged
+            float frontlineBonus =
+                unit.currentAttackers > 0 ? -1.5f : 0f;
+
+            float score =
+                sqrDist +
+                attackerPenalty +
+                frontlineBonus;
+
+            if (score < bestScore)
+            {
+                bestScore = score;
+                best = unit;
+            }
+        }
+
+        return best;
+    }
+
+    private SteeringData ComputeSteering()
+    {
+        SteeringData data = new SteeringData();
+
+        Vector2 myPos = cachedTransform.position;
+
+        int allyCount = 0;
+
+        int hits = Physics2D.OverlapCircleNonAlloc(
+            myPos,
+            separationRadius,
+            nearbyUnits
+        );
+
+        for (int i = 0; i < hits; i++)
+        {
+            ArmyUnit unit =
+                nearbyUnits[i].GetComponent<ArmyUnit>();
+
+            if (unit == null || unit == this)
+                continue;
+
+            if (unit.playerControlled != playerControlled)
+                continue;
+
+            Vector2 offset =
+                myPos -
+                (Vector2)unit.cachedTransform.position;
+
+            float sqrDist = offset.sqrMagnitude;
+
+            if (sqrDist < 0.0001f)
+                continue;
+
+            float dist = Mathf.Sqrt(sqrDist);
+
+            Vector2 dir = offset / dist;
+
+            // ----------------------------
+            // SEPARATION
+            // ----------------------------
+
+            data.separation += dir / dist;
+
+            // ----------------------------
+            // COHESION
+            // ----------------------------
+
+            data.cohesion +=
+                (Vector2)unit.cachedTransform.position;
+
+            // ----------------------------
+            // ALIGNMENT
+            // ----------------------------
+
+            data.alignment += unit.currentVelocity;
+
+            allyCount++;
+
+            // ----------------------------
+            // LOCAL DENSITY
+            // ----------------------------
+
+            if (Vector2.Dot(-dir, currentVelocity.normalized) > 0.5f)
+            {
+                data.localDensity += 1f;
+            }
+        }
+
+        if (allyCount > 0)
+        {
+            data.separation /=
+                allyCount;
+
+            data.cohesion =
+                ((data.cohesion / allyCount) - myPos)
+                * cohesionStrength;
+
+            data.alignment =
+                (data.alignment / allyCount)
+                * alignmentStrength;
+        }
+
+        data.separation *= separationStrength;
+
+        return data;
+    }
+
+    private void MoveTowardsTarget(
+        float deltaTime,
+        Vector2 direction,
+        float sqrDist,
+        bool engaged)
+    {
+        if (sqrDist <= 0.001f)
+            return;
+
+        float dist = Mathf.Sqrt(sqrDist);
+
+        direction /= dist;
+
+        SteeringData steering =
+            ComputeSteering();
+
+        // ----------------------------
+        // TARGET FORCE
+        // ----------------------------
+
+        Vector2 desiredDirection =
+            direction;
+
+        // ----------------------------
+        // COMBINE STEERING
+        // ----------------------------
+
+        desiredDirection += steering.separation;
+        desiredDirection += steering.cohesion;
+        desiredDirection += steering.alignment;
+
+        // ----------------------------
+        // FRONTLINE PRESSURE
+        // ----------------------------
+
+        float densitySlow =
+            1f /
+            (1f + steering.localDensity * frontlineResistance);
+
+        // ----------------------------
+        // ENGAGEMENT LOCKING
+        // ----------------------------
+
+        float engageMultiplier =
+            engaged ? engagementSlowMultiplier : 1f;
+
+        desiredDirection.Normalize();
+
+        currentVelocity =
+            desiredDirection *
+            moveSpeed *
+            densitySlow *
+            engageMultiplier;
+
+        cachedTransform.position +=
+            (Vector3)(currentVelocity * deltaTime);
+    }
+
+    void AttackTarget()
+    {
+        if (attackCooldown > 0f)
+            return;
+
+        attackCooldown = 1f / attackSpeed;
+
+        if (currentTarget == null)
+            return;
+
+        if (!currentTarget.gameObject.activeSelf)
+            return;
+
+        if (attackType == AttackType.Melee)
+        {
+            currentTarget.TakeDamage(attackDamage);
+        }
+        else if (attackType == AttackType.Ranged)
+        {
+            currentTarget.TakeDamage(attackDamage);
+        }
+    }
+    */
+    #endregion
+
     public void TakeDamage(float amount)
     {
+        if (!gameObject.activeSelf) return;
         currentHealth -= amount;
 
         if (currentHealth <= 0f)
@@ -231,18 +604,20 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
-        Destroy(gameObject);
+        lane.RemoveFromArmy(this);
+        UnitPool.Instance.ReleaseFrom(this);
+        //Destroy(gameObject);
     }
 
     #region Wandering code
 
-    private void HandleWander()
+    public void HandleWander(float deltaTime)
     {
         if (isWaiting)
         {
-            waitTime -= Time.deltaTime;
+            waitTime -= deltaTime;
             if (waitTime <= 0) 
             {
                 PickNewTarget();
@@ -251,19 +626,20 @@ public class ArmyUnit : MonoBehaviour
         }
         else
         {
-            MoveToTarget();
+            MoveToTarget(deltaTime);
         }
     }
 
-    private void MoveToTarget()
+    private void MoveToTarget(float deltaTime)
     {
         Vector2 toTarget = (targetPosition - (Vector2)transform.position).normalized;
 
-        Vector2 separation = ComputeSeparation();
+        //Vector2 separation = ComputeSeparation();
+        Vector2 separation = Vector2.zero;
 
         Vector2 finalDirection = (toTarget + separation).normalized;
 
-        transform.position += (Vector3)(finalDirection * moveSpeed * Time.deltaTime);
+        transform.position += (Vector3)(finalDirection * moveSpeed * deltaTime);
 
         float distance = Vector2.Distance(transform.position, targetPosition);
 
@@ -284,8 +660,10 @@ public class ArmyUnit : MonoBehaviour
         isWaiting = true;
         waitTime = Random.Range(minWaitTime, maxWaitTime);
     }
-
+    
     #endregion
+
+
 
     void OnDrawGizmosSelected()
     {

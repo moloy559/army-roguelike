@@ -37,6 +37,7 @@ public class Lane : MonoBehaviour
     private List<ArmyUnit> playerArmy = new List<ArmyUnit>();
     private List<ArmyUnit> enemyArmy = new List<ArmyUnit>();
 
+
     private List<ResourceDisplay> laneResourceDisplays = new List<ResourceDisplay>();
 
     private int repairTimer = 0;
@@ -49,8 +50,34 @@ public class Lane : MonoBehaviour
         levelButtonsHolder.SetActive(false);
         ShopManager.Instance.onSelectStructure += OnStructureSelected;
         ShopManager.Instance.onShopReset += OnShopReset;
+
         spire.SetLane(this);
     }
+
+    private void Update()
+    {
+        float deltaTime = Time.deltaTime;
+
+        UpdateArmy(playerArmy, deltaTime);
+        UpdateArmy(enemyArmy, deltaTime);
+    }
+
+    private void UpdateArmy(List<ArmyUnit> army, float deltaTime)
+    {
+        for (int i = army.Count - 1; i >= 0; i--)
+        {
+            ArmyUnit unit = army[i];
+
+            if (unit == null || !unit.gameObject.activeSelf)
+                continue;
+
+            if (GameManager.Instance.inCombat)
+                unit.HandleCombat(deltaTime);
+            else
+                unit.HandleWander(deltaTime);
+        }
+    }
+
 
     private void OnDestroy()
     {
@@ -90,7 +117,16 @@ public class Lane : MonoBehaviour
             int gemIncome = resources["gem-income"];
             resources["gems"] += gemIncome;
         }
-        
+
+        UpdateDisplay();
+
+        ClearArmy(playerArmy);
+        playerArmy = new();
+
+        ClearArmy(enemyArmy);
+        enemyArmy = new();
+
+
         SpawnArmy(resources, unitPrefab, unitSpawnPoint, true, playerArmy);
         playerArmy.Add(spire);
 
@@ -106,7 +142,6 @@ public class Lane : MonoBehaviour
             spire.TakeDamage(-missingHp);
         }
 
-        UpdateDisplay();
     }
 
     public void CityLevelUp()
@@ -160,9 +195,15 @@ public class Lane : MonoBehaviour
         if(units.Contains(spire)) units.Remove(spire);
         for (int i = units.Count - 1; i >= 0; i--)
         {
-            if (units[i] != null) Destroy(units[i].gameObject);
+            if (units[i] != null) units[i].Die();
         }
         units.Clear();
+    }
+
+    public void RemoveFromArmy(ArmyUnit unit)
+    {
+        if(unit.playerControlled) playerArmy.Remove(unit);
+        else enemyArmy.Remove(unit);
     }
 
     private void SpawnArmy(SerializedDictionary<string, int> army, GameObject unitPrefab, Transform spawnPoint, bool playerControlled, List<ArmyUnit> units) 
@@ -173,10 +214,8 @@ public class Lane : MonoBehaviour
             {
                 for (int i = 0; i < army[key]; i++)
                 {
-                    GameObject obj = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
-                    ArmyUnit aUnit = obj.GetComponent<ArmyUnit>();
-                    aUnit.playerControlled = playerControlled;
-                    aUnit.Fill(GameManager.Instance.unitData[key], this);
+                    ArmyUnit aUnit = UnitPool.Instance.Get();
+                    aUnit.Fill(GameManager.Instance.unitData[key], this, playerControlled, spawnPoint.position);
 
                     units.Add(aUnit);
                 }
