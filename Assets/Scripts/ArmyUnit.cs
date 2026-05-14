@@ -604,7 +604,7 @@ public class ArmyUnit : MonoBehaviour
         }
     }
 
-    public void Die()
+    public virtual void Die()
     {
         lane.RemoveFromArmy(this);
         UnitPool.Instance.ReleaseFrom(this);

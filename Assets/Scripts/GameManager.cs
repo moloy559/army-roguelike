@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI roundText;
+    public GameObject endScreen;
 
     [Header("Data")]
     public GameData data;
@@ -38,9 +40,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        endScreen.SetActive(false);
         //Setting up dictionaries
         #region Set up dictionaries
-        
+
         unitData = new Dictionary<string, UnitData>();
         foreach(UnitData unitD in data.units)
         {
@@ -60,7 +63,7 @@ public class GameManager : MonoBehaviour
         }
         foreach (UnitData unitD in data.units)
         {
-            resourceData.Add(unitD.name, new ResourceData() { name = unitD.name, sprite = unitD.sprite});
+            if(!resourceData.ContainsKey(unitD.name)) resourceData.Add(unitD.name, new ResourceData() { name = unitD.name, sprite = unitD.sprite });
         }
         #endregion
 
@@ -128,4 +131,14 @@ public class GameManager : MonoBehaviour
         roundText.text = "Round: " + round;
     }
 
+    public void GameOver()
+    {
+        endScreen.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
 }
