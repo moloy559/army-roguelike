@@ -64,8 +64,8 @@ MonoBehaviour:
     moveSpeed: 1.5
   - name: dragon
     sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
-    maxHealth: 100
-    attackDamage: 5
+    maxHealth: 150
+    attackDamage: 10
     attackSpeed: 10
     attackRange: 1
     moveSpeed: 4
@@ -76,7 +76,7 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 2
     moveSpeed: 0.5
-  - name: peasant
+  - name: population
     sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 10
     attackDamage: 0.25
@@ -92,8 +92,8 @@ MonoBehaviour:
     moveSpeed: 2
   - name: dragon-rider
     sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
-    maxHealth: 120
-    attackDamage: 3
+    maxHealth: 180
+    attackDamage: 12
     attackSpeed: 10
     attackRange: 2
     moveSpeed: 4
@@ -120,6 +120,7 @@ MonoBehaviour:
     moveSpeed: 1
   structures:
   - name: garrison
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
     inputResource:
@@ -129,6 +130,7 @@ MonoBehaviour:
       resourceName: knight
       amount: 4
   - name: flechery
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
     inputResource:
@@ -138,6 +140,7 @@ MonoBehaviour:
       resourceName: archer
       amount: 4
   - name: lancer-maker
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
     inputResource:
@@ -147,6 +150,7 @@ MonoBehaviour:
       resourceName: lancer
       amount: 4
   - name: stable
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 5
     inputResource:
@@ -156,6 +160,7 @@ MonoBehaviour:
       resourceName: cavalry
       amount: 4
   - name: giant-maker
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
     inputResource:
@@ -165,6 +170,7 @@ MonoBehaviour:
       resourceName: giant
       amount: 1
   - name: assasins-guild
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
     inputResource:
@@ -174,6 +180,7 @@ MonoBehaviour:
       resourceName: assassin
       amount: 2
   - name: barracks
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
     inputResource:
@@ -183,6 +190,7 @@ MonoBehaviour:
       resourceName: soldier
       amount: 4
   - name: god-maker
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1000
     inputResource:
@@ -192,6 +200,7 @@ MonoBehaviour:
       resourceName: god
       amount: 1
   - name: gunsmith
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 7
     inputResource:
@@ -200,16 +209,18 @@ MonoBehaviour:
     outputResource:
       resourceName: gunner
       amount: 1
-  - name: peasant-homes
+  - name: gem-transmutator
+    rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 1
+    goldCost: 3
     inputResource:
-      resourceName: population
-      amount: 5
+      resourceName: gold
+      amount: 1
     outputResource:
-      resourceName: peasant
+      resourceName: gem-income
       amount: 5
   - name: mage-tower
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 5
     inputResource:
@@ -219,6 +230,7 @@ MonoBehaviour:
       resourceName: mage
       amount: 1
   - name: dragon-nest
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
     inputResource:
@@ -228,8 +240,9 @@ MonoBehaviour:
       resourceName: egg
       amount: 1
   - name: dragon-hatchery
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 10
+    goldCost: 6
     inputResource:
       resourceName: egg
       amount: 1
@@ -237,6 +250,7 @@ MonoBehaviour:
       resourceName: dragon
       amount: 1
   - name: gem-mine
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 5
     inputResource:
@@ -246,8 +260,9 @@ MonoBehaviour:
       resourceName: gem-income
       amount: 1
   - name: dragon-rider-roost
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 15
+    goldCost: 10
     inputResource:
       resourceName: dragon
       amount: 1
@@ -255,6 +270,7 @@ MonoBehaviour:
       resourceName: dragon-rider
       amount: 1
   - name: farm
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
     inputResource:
@@ -264,6 +280,7 @@ MonoBehaviour:
       resourceName: pop-growth
       amount: 1
   - name: gold-mine
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
     inputResource:
@@ -273,6 +290,7 @@ MonoBehaviour:
       resourceName: gold
       amount: 1
   - name: granary
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
     inputResource:
@@ -282,24 +300,27 @@ MonoBehaviour:
       resourceName: pop-growth
       amount: 2
   - name: trading-post
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
     inputResource:
       resourceName: population
-      amount: 1
+      amount: 2
     outputResource:
       resourceName: gold
       amount: 2
   - name: hunters-lodge
+    rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
     inputResource:
       resourceName: population
-      amount: 5
+      amount: 10
     outputResource:
       resourceName: hunter
       amount: 10
   - name: mill
+    rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 7
     inputResource:
@@ -309,6 +330,7 @@ MonoBehaviour:
       resourceName: pop-growth
       amount: 3
   - name: treasury
+    rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 8
     inputResource:
@@ -318,6 +340,7 @@ MonoBehaviour:
       resourceName: gold
       amount: 3
   - name: mage-academy
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
     inputResource:
@@ -327,6 +350,7 @@ MonoBehaviour:
       resourceName: mage
       amount: 3
   - name: bigger-mage-tower
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 8
     inputResource:
@@ -336,6 +360,7 @@ MonoBehaviour:
       resourceName: archmage
       amount: 1
   - name: crystal-refinery
+    rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 10
     inputResource:
@@ -345,6 +370,7 @@ MonoBehaviour:
       resourceName: gem-income
       amount: 3
   - name: mage-university
+    rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 10
     inputResource:
@@ -353,24 +379,6 @@ MonoBehaviour:
     outputResource:
       resourceName: archmage
       amount: 3
-  - name: work-house
-    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 3
-    inputResource:
-      resourceName: population
-      amount: 15
-    outputResource:
-      resourceName: peasant
-      amount: 20
-  - name: peasant-lodge
-    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 6
-    inputResource:
-      resourceName: population
-      amount: 20
-    outputResource:
-      resourceName: peasant
-      amount: 30
   resources:
   - name: gold
     sprite: {fileID: 21300000, guid: 1f782831b783eab4dbc6d7d4b4e60aea, type: 3}
@@ -388,7 +396,7 @@ MonoBehaviour:
   - round: 0
     army:
       _serializedList:
-      - Key: peasant
+      - Key: population
         Value: 1
   - round: 1
     army:
@@ -479,11 +487,123 @@ MonoBehaviour:
         Value: 12
       - Key: archer
         Value: 8
-  unitTableColumnCount: 13
+  shopGenerations:
+  - round: 0
+    commonWeight: 1
+    uncommonWeight: 0
+    rareWeight: 0
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 1
+    commonWeight: 1
+    uncommonWeight: 0
+    rareWeight: 0
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 2
+    commonWeight: 1
+    uncommonWeight: 0.3
+    rareWeight: 0
+    forcedUncommon: 1
+    forcedRare: 0
+  - round: 3
+    commonWeight: 1
+    uncommonWeight: 0.3
+    rareWeight: 0
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 4
+    commonWeight: 1
+    uncommonWeight: 0.3
+    rareWeight: 0
+    forcedUncommon: 1
+    forcedRare: 0
+  - round: 5
+    commonWeight: 1
+    uncommonWeight: 0.3
+    rareWeight: 0
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 6
+    commonWeight: 1
+    uncommonWeight: 0.6
+    rareWeight: 0.3
+    forcedUncommon: 1
+    forcedRare: 1
+  - round: 7
+    commonWeight: 1
+    uncommonWeight: 0.6
+    rareWeight: 0.3
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 8
+    commonWeight: 1
+    uncommonWeight: 0.6
+    rareWeight: 0.3
+    forcedUncommon: 1
+    forcedRare: 0
+  - round: 9
+    commonWeight: 1
+    uncommonWeight: 0.6
+    rareWeight: 0.3
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 10
+    commonWeight: 1
+    uncommonWeight: 1
+    rareWeight: 0.3
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 11
+    commonWeight: 1
+    uncommonWeight: 1
+    rareWeight: 0.3
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 12
+    commonWeight: 1
+    uncommonWeight: 1
+    rareWeight: 0.6
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 13
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 0.6
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 14
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 0.6
+    forcedUncommon: 0
+    forcedRare: 1
+  - round: 15
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 1
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 16
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 1
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 17
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 1
+    forcedUncommon: 0
+    forcedRare: 0
+  - round: 18
+    commonWeight: 0.6
+    uncommonWeight: 1
+    rareWeight: 1
+    forcedUncommon: 0
+    forcedRare: 0
   unitTable: {fileID: 4900000, guid: 653be4f28e6ec1245905da6eff4b3ff1, type: 3}
-  structureTableColumnCount: 14
   structureTable: {fileID: 4900000, guid: 8aa023ae206b9ae45a2e5764379e974b, type: 3}
-  resourceTableColumnCount: 2
   resourceTable: {fileID: 4900000, guid: d5fe38b2a89795e4ca36986d5e5cbcb8, type: 3}
-  armySetTableColumnCount: 6
   armySetTable: {fileID: 4900000, guid: 1b24b71f8863c474ca5eff8df5b5aa58, type: 3}
+  shopGenerationTable: {fileID: 4900000, guid: 31cd552d2849f7546982a0650d676875, type: 3}
