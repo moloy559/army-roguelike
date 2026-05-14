@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         }
         foreach (UnitData unitD in data.units)
         {
-            resourceData.Add(unitD.name, new ResourceData() { name = unitD.name, sprite = unitD.sprite});
+            if(!resourceData.ContainsKey(unitD.name)) resourceData.Add(unitD.name, new ResourceData() { name = unitD.name, sprite = unitD.sprite });
         }
         #endregion
 
