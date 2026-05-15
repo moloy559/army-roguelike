@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Spire : ArmyUnit
 {
+    public UnitData spireData;
     public bool amCentralSpire;
+
+    protected override void Start()
+    {
+        base.Start();
+        unitData = spireData;
+    }
+
     public override void Die()
     {
         gameObject.SetActive(false);
