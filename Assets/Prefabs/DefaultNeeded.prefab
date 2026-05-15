@@ -2161,7 +2161,7 @@ MonoBehaviour:
   - {fileID: 0}
   goldText: {fileID: 482303828964248023}
   roundText: {fileID: 3383600404220961504}
-  endScreen: {fileID: 0}
+  endScreen: {fileID: 7487643376590017809}
   data: {fileID: 11400000, guid: 6dbbcd35f2777d34281cd051d6755307, type: 2}
   gold: 15
   round: 0
