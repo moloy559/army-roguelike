@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   units:
   - name: knight
-    sprite: {fileID: 21300000, guid: c3b0b36e85bb7c941920efd43045cee4, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 30
     attackDamage: 5
     attackSpeed: 0.5
@@ -25,7 +25,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: archer
-    sprite: {fileID: 21300000, guid: 10c296523a4fb6d40a291051794c429c, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 10
     attackDamage: 3
     attackSpeed: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
   - name: lancer
-    sprite: {fileID: 21300000, guid: 06f2b1e293e141b4cbb183e12508183a, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 15
     attackDamage: 4
     attackSpeed: 1
@@ -47,7 +47,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: cavalry
-    sprite: {fileID: 21300000, guid: a33ae6d26eb9ee64ba32777d6c31ba62, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 20
     attackDamage: 3
     attackSpeed: 1
@@ -58,7 +58,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: giant
-    sprite: {fileID: 21300000, guid: 677650a04ce8c6644ba78cb4dfc2fc1f, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 65
     attackDamage: 30
     attackSpeed: 0.5
@@ -69,7 +69,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: assassin
-    sprite: {fileID: 21300000, guid: e518929398f02ee40b6029df6c3eae3a, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 10
     attackDamage: 10
     attackSpeed: 3
@@ -80,7 +80,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: soldier
-    sprite: {fileID: 21300000, guid: 8e7d2cb136b60f748ba588197b1fe781, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 12
     attackDamage: 3
     attackSpeed: 2
@@ -91,9 +91,9 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: dragon
-    sprite: {fileID: 21300000, guid: 0ee82d682a6fbe04db8c892b3e2adc66, type: 3}
-    maxHealth: 100
-    attackDamage: 5
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 150
+    attackDamage: 10
     attackSpeed: 10
     attackRange: 1
     moveSpeed: 4
@@ -102,7 +102,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: gunner
-    sprite: {fileID: 21300000, guid: 90bcfc164af75fb46a3a7deb230aca90, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 16
     attackDamage: 1
     attackSpeed: 10
@@ -112,8 +112,8 @@ MonoBehaviour:
     projectileData:
       speed: 3
       sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
-  - name: peasant
-    sprite: {fileID: 21300000, guid: 618b5efc851c4004a98f7f0e97af38b8, type: 3}
+  - name: population
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 10
     attackDamage: 0.25
     attackSpeed: 4
@@ -135,9 +135,9 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 21300000, guid: 5d8209006344f7f478446b89adee5ce4, type: 3}
   - name: dragon-rider
-    sprite: {fileID: 21300000, guid: b57d3f5fdc7b56e44a0f58582a3c0456, type: 3}
-    maxHealth: 120
-    attackDamage: 3
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
+    maxHealth: 180
+    attackDamage: 12
     attackSpeed: 10
     attackRange: 2
     moveSpeed: 4
@@ -146,7 +146,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 0}
   - name: mage
-    sprite: {fileID: 21300000, guid: 4433567942119cd4b87911855587436b, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 5
     attackDamage: 15
     attackSpeed: 2
@@ -157,7 +157,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 21300000, guid: 5d8209006344f7f478446b89adee5ce4, type: 3}
   - name: hunter
-    sprite: {fileID: 21300000, guid: 403d48c41356b8c4394cff4361aedbef, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 8
     attackDamage: 0.5
     attackSpeed: 3
@@ -168,7 +168,7 @@ MonoBehaviour:
       speed: 3
       sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
   - name: archmage
-    sprite: {fileID: 21300000, guid: 92c9875b90aed064684be10ea1c10c27, type: 3}
+    sprite: {fileID: 21300000, guid: 65b4a8373ecf4fb42b51d0f0a2398c67, type: 3}
     maxHealth: 8
     attackDamage: 30
     attackSpeed: 3
@@ -186,18 +186,18 @@ MonoBehaviour:
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 4
       outputResources:
       - resourceName: knight
         amount: 4
-  - name: flechery
+  - name: fletchery
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 4
       outputResources:
       - resourceName: archer
         amount: 4
@@ -208,7 +208,7 @@ MonoBehaviour:
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 4
       outputResources:
       - resourceName: lancer
         amount: 4
@@ -219,7 +219,7 @@ MonoBehaviour:
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 4
       outputResources:
       - resourceName: cavalry
         amount: 4
@@ -241,7 +241,7 @@ MonoBehaviour:
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 2
       outputResources:
       - resourceName: assassin
         amount: 2
@@ -254,7 +254,7 @@ MonoBehaviour:
     transaction:
       inputResources:
       - resourceName: population
-        amount: 1
+        amount: 4
       outputResources:
       - resourceName: soldier
         amount: 4
@@ -282,16 +282,16 @@ MonoBehaviour:
       outputResources:
       - resourceName: gunner
         amount: 1
-  - name: peasant-homes
-    rarity: 0
+  - name: gem-transmutor
+    rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 1
+    goldCost: 3
     transaction:
       inputResources:
-      - resourceName: population
-        amount: 5
+      - resourceName: gold
+        amount: 1
       outputResources:
-      - resourceName: peasant
+      - resourceName: gems
         amount: 5
   - name: mage-tower
     rarity: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
   - name: dragon-hatchery
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 3
+    goldCost: 6
     transaction:
       inputResources:
       - resourceName: egg
@@ -329,18 +329,18 @@ MonoBehaviour:
   - name: gem-mine
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 1
+    goldCost: 5
     transaction:
       inputResources:
       - resourceName: population
         amount: 1
       outputResources:
-      - resourceName: gems
-        amount: 3
+      - resourceName: gem-income
+        amount: 1
   - name: dragon-rider-roost
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 3
+    goldCost: 10
     transaction:
       inputResources:
       - resourceName: dragon
@@ -381,7 +381,7 @@ MonoBehaviour:
       outputResources:
       - resourceName: pop-growth
         amount: 2
-  - name: treasury
+  - name: trading-post
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
@@ -402,7 +402,9 @@ MonoBehaviour:
         amount: 5
       outputResources:
       - resourceName: hunter
-        amount: 10
+        amount: 5
+      - resourceName: pop-growth
+        amount: 1
   - name: mill
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
@@ -414,10 +416,10 @@ MonoBehaviour:
       outputResources:
       - resourceName: pop-growth
         amount: 3
-  - name: trading-post
+  - name: treasury
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 3
+    goldCost: 8
     transaction:
       inputResources:
       - resourceName: population
@@ -441,7 +443,7 @@ MonoBehaviour:
   - name: bigger-mage-tower
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 6
+    goldCost: 8
     transaction:
       inputResources:
       - resourceName: population
@@ -454,18 +456,18 @@ MonoBehaviour:
   - name: crystal-refinery
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 3
+    goldCost: 10
     transaction:
       inputResources:
       - resourceName: population
         amount: 2
       outputResources:
-      - resourceName: gems
-        amount: 5
+      - resourceName: gem-income
+        amount: 3
   - name: mage-university
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 6
+    goldCost: 10
     transaction:
       inputResources:
       - resourceName: gems
@@ -473,28 +475,6 @@ MonoBehaviour:
       outputResources:
       - resourceName: archmage
         amount: 3
-  - name: work-house
-    rarity: 1
-    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 1
-    transaction:
-      inputResources:
-      - resourceName: population
-        amount: 15
-      outputResources:
-      - resourceName: peasant
-        amount: 20
-  - name: peasant-lodge
-    rarity: 2
-    sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
-    goldCost: 1
-    transaction:
-      inputResources:
-      - resourceName: population
-        amount: 20
-      outputResources:
-      - resourceName: peasant
-        amount: 30
   resources:
   - name: gold
     sprite: {fileID: 21300000, guid: 1f782831b783eab4dbc6d7d4b4e60aea, type: 3}
