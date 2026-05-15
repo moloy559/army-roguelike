@@ -1832,6 +1832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 2926396894353689804, guid: 20e4cecec7c004d419fbbb6068ef259b, type: 3}
+  projectilePrefab: {fileID: 3336765512700420548, guid: 8935beeb5a0247c48aff6f41ef053ee4, type: 3}
 --- !u!1001 &341259452679659648
 PrefabInstance:
   m_ObjectHideFlags: 0

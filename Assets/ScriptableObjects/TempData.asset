@@ -20,6 +20,10 @@ MonoBehaviour:
     attackSpeed: 0.5
     attackRange: 0.3
     moveSpeed: 2
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: archer
     sprite: {fileID: 21300000, guid: 10c296523a4fb6d40a291051794c429c, type: 3}
     maxHealth: 10
@@ -27,6 +31,10 @@ MonoBehaviour:
     attackSpeed: 1
     attackRange: 2
     moveSpeed: 1
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
   - name: lancer
     sprite: {fileID: 21300000, guid: 06f2b1e293e141b4cbb183e12508183a, type: 3}
     maxHealth: 15
@@ -34,6 +42,10 @@ MonoBehaviour:
     attackSpeed: 1
     attackRange: 0.6
     moveSpeed: 1.5
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: cavalry
     sprite: {fileID: 21300000, guid: a33ae6d26eb9ee64ba32777d6c31ba62, type: 3}
     maxHealth: 20
@@ -41,6 +53,10 @@ MonoBehaviour:
     attackSpeed: 1
     attackRange: 1.5
     moveSpeed: 3
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: giant
     sprite: {fileID: 21300000, guid: 677650a04ce8c6644ba78cb4dfc2fc1f, type: 3}
     maxHealth: 65
@@ -48,6 +64,10 @@ MonoBehaviour:
     attackSpeed: 0.5
     attackRange: 0.4
     moveSpeed: 0.2
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: assassin
     sprite: {fileID: 21300000, guid: e518929398f02ee40b6029df6c3eae3a, type: 3}
     maxHealth: 10
@@ -55,6 +75,10 @@ MonoBehaviour:
     attackSpeed: 3
     attackRange: 0.3
     moveSpeed: 6
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: soldier
     sprite: {fileID: 21300000, guid: 8e7d2cb136b60f748ba588197b1fe781, type: 3}
     maxHealth: 12
@@ -62,6 +86,10 @@ MonoBehaviour:
     attackSpeed: 2
     attackRange: 0.5
     moveSpeed: 1.5
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: dragon
     sprite: {fileID: 21300000, guid: 0ee82d682a6fbe04db8c892b3e2adc66, type: 3}
     maxHealth: 100
@@ -69,6 +97,10 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 1
     moveSpeed: 4
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: gunner
     sprite: {fileID: 21300000, guid: 90bcfc164af75fb46a3a7deb230aca90, type: 3}
     maxHealth: 16
@@ -76,6 +108,10 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 2
     moveSpeed: 0.5
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
   - name: peasant
     sprite: {fileID: 21300000, guid: 618b5efc851c4004a98f7f0e97af38b8, type: 3}
     maxHealth: 10
@@ -83,6 +119,10 @@ MonoBehaviour:
     attackSpeed: 4
     attackRange: 0.3
     moveSpeed: 1
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: druid
     sprite: {fileID: 21300000, guid: 13a15caddd52fea44b12e44c6a2dd261, type: 3}
     maxHealth: 80
@@ -90,6 +130,10 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 1
     moveSpeed: 1
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: 5d8209006344f7f478446b89adee5ce4, type: 3}
   - name: dragon-rider
     sprite: {fileID: 21300000, guid: b57d3f5fdc7b56e44a0f58582a3c0456, type: 3}
     maxHealth: 120
@@ -97,6 +141,10 @@ MonoBehaviour:
     attackSpeed: 10
     attackRange: 2
     moveSpeed: 4
+    attackType: 0
+    projectileData:
+      speed: 3
+      sprite: {fileID: 0}
   - name: mage
     sprite: {fileID: 21300000, guid: 4433567942119cd4b87911855587436b, type: 3}
     maxHealth: 5
@@ -104,6 +152,10 @@ MonoBehaviour:
     attackSpeed: 2
     attackRange: 3
     moveSpeed: 1
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: 5d8209006344f7f478446b89adee5ce4, type: 3}
   - name: hunter
     sprite: {fileID: 21300000, guid: 403d48c41356b8c4394cff4361aedbef, type: 3}
     maxHealth: 8
@@ -111,6 +163,10 @@ MonoBehaviour:
     attackSpeed: 3
     attackRange: 1.8
     moveSpeed: 1
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: b6f19bbdc1a73dc4b84dc382e4bbe099, type: 3}
   - name: archmage
     sprite: {fileID: 21300000, guid: 92c9875b90aed064684be10ea1c10c27, type: 3}
     maxHealth: 8
@@ -118,6 +174,10 @@ MonoBehaviour:
     attackSpeed: 3
     attackRange: 4
     moveSpeed: 1
+    attackType: 1
+    projectileData:
+      speed: 3
+      sprite: {fileID: 21300000, guid: 5d8209006344f7f478446b89adee5ce4, type: 3}
   structures:
   - name: garrison
     rarity: 0
@@ -452,7 +512,7 @@ MonoBehaviour:
   - round: 0
     army:
       _serializedList:
-      - Key: peasant
+      - Key: population
         Value: 1
   - round: 1
     army:
