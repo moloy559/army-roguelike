@@ -223,7 +223,7 @@ MonoBehaviour:
       Value: 1
     - Key: population
       Value: 1
-  turnsToRepair: 1
+  turnsToRepair: 2
 --- !u!1 &1497623597777827078
 GameObject:
   m_ObjectHideFlags: 0
