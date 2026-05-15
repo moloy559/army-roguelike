@@ -106,14 +106,14 @@ public class GameData : ScriptableObject
     {
         Dictionary<string, string> result = new();
 
-        foreach (string pair in data.Split(';'))
+        foreach (string pair in data.Replace("\r", "").Replace("\n", "").Split(';'))
         {
             if (string.IsNullOrWhiteSpace(pair))
                 continue;
 
             string[] split = pair.Split('=');
 
-            result.Add(split[0], split[1]);
+            if(split.Length > 0) result.Add(split[0], split[1]);
         }
 
         return result;
@@ -180,11 +180,33 @@ public class GameData : ScriptableObject
                 attackDamage = float.Parse(GetValue(data, headers, i, "Attack")),
                 attackSpeed = float.Parse(GetValue(data, headers, i, "Attack Speed")),
                 attackRange = float.Parse(GetValue(data, headers, i, "Attack Range")),
-                moveSpeed = float.Parse(GetValue(data, headers, i, "Move Speed"))
+                moveSpeed = float.Parse(GetValue(data, headers, i, "Move Speed")),
+                attackType = Enum.Parse<AttackType>(GetValue(data, headers, i, "Attack Type")),
+                projectileData = ParseProjectile(GetValue(data, headers, i, "Attack Data"))
             });
         }
 
         return units;
+    }
+
+
+    private ProjectileData ParseProjectile(string data)
+    {
+        Dictionary<string, string> extraData = ParseExtraData(data);
+
+        ProjectileData projectile = new ProjectileData();
+
+        if (extraData.ContainsKey("projectile-speed"))
+        {
+            projectile.speed = float.Parse(extraData["projectile-speed"]);
+        }
+
+        if (extraData.ContainsKey("projectile-sprite"))
+        {
+            projectile.sprite = Resources.Load<Sprite>("sprites/" + extraData["projectile-sprite"]);
+        }
+
+        return projectile;
     }
 
     private List<StructureData> GetStructuresFromTable()

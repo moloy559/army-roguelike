@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class ArmyUnit : MonoBehaviour
 {
-    public enum AttackType { Melee, Ranged }
 
     public bool playerControlled;
     public bool pause = false;
@@ -51,6 +50,7 @@ public class ArmyUnit : MonoBehaviour
 
 
     private Lane lane;
+    protected UnitData unitData;
 
     private Vector2 spawnPosition;
     private Vector2 targetPosition;
@@ -64,7 +64,7 @@ public class ArmyUnit : MonoBehaviour
     private float retargetTimer;
     float attackRangeSqr;
 
-    void Start()
+    protected virtual void Start()
     {
         cachedTransform = transform;
         spawnPosition = transform.position;
@@ -74,22 +74,9 @@ public class ArmyUnit : MonoBehaviour
         attackRangeSqr = attackRange * attackRange;
     }
 
-    private void OldUpdate()
-    {
-        if(lane == null) return;
-
-        if (GameManager.Instance.inCombat && pause == false)
-        {
-            //HandleCombat();
-        }
-        else
-        {
-            //HandleWander();
-        }
-    }
-
     public void Fill(UnitData data, Lane lane, bool playerControlled, Vector2 spawnPoint)
     {
+        unitData = data;
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
         attackDamage = data.attackDamage;
@@ -97,6 +84,7 @@ public class ArmyUnit : MonoBehaviour
         attackSpeed = data.attackSpeed;
         moveSpeed = data.moveSpeed;
         spriteRenderer.sprite = data.sprite;
+        attackType = data.attackType;
 
         attackRangeSqr = attackRange * attackRange;
 
@@ -258,8 +246,9 @@ public class ArmyUnit : MonoBehaviour
             }
             else if (attackType == AttackType.Ranged)
             {
-                //Swap to projectile animation later
-                currentTarget.TakeDamage(attackDamage);
+                Projectile projectile = UnitPool.Instance.GetProjectile();
+                projectile.Fill(cachedTransform.position, currentTarget, attackDamage, unitData.projectileData.speed, unitData.projectileData.sprite);
+
             }
         }
     }

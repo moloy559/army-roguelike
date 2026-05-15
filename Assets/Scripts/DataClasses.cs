@@ -1,7 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
 using UnityEngine;
+
+public enum AttackType
+{
+    Melee,
+    Ranged
+}
 
 [System.Serializable]
 public class UnitData
@@ -13,6 +20,19 @@ public class UnitData
     public float attackSpeed;
     public float attackRange;
     public float moveSpeed;
+    public AttackType attackType;
+
+    [ShowIf("attackType", AttackType.Ranged)]
+    [AllowNesting]
+    public ProjectileData projectileData;
+   
+}
+
+[System.Serializable]
+public class ProjectileData
+{
+    public float speed = 3f;
+    public Sprite sprite;
 }
 
 public enum Rarity
