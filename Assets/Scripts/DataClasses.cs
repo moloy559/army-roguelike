@@ -49,14 +49,14 @@ public class StructureData
     public Rarity rarity;
     public Sprite sprite;
     public int goldCost;
-    public ResourceTransaction transaction;
+    public List<ResourceTransaction> transactions;
 }
 
 [System.Serializable]
 public struct ResourceSet
 {
     public string resourceName;
-    public int amount; 
+    public int amount;
 }
 
 [System.Serializable]
@@ -64,6 +64,9 @@ public class ResourceTransaction
 {
     public List<ResourceSet> inputResources;
     public List<ResourceSet> outputResources;
+
+    public int repeats = 0;
+    public int cooldown = -1;
 }
 
 [System.Serializable]
@@ -93,3 +96,4 @@ public class ShopGenerationData
     public bool forcedUncommon;
     public bool forcedRare;
 }
+

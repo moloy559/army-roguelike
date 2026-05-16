@@ -7,11 +7,9 @@ using UnityEngine.UI;
 public class Lane : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public GameObject enemyUnitPrefab;
     public Transform enemyUnitSpawnPoint;
 
     [Header("Player Settings")]
-    public GameObject unitPrefab;
     public Transform unitSpawnPoint;
     
     public Spire spire;
@@ -32,10 +30,9 @@ public class Lane : MonoBehaviour
     [SerializedDictionary("Resource Name", "Amount")]
     public SerializedDictionary<string, int> resources; 
 
-    private List<Structure> structuresNeedingInput = new List<Structure>();
 
-    private List<ArmyUnit> playerArmy = new List<ArmyUnit>();
-    private List<ArmyUnit> enemyArmy = new List<ArmyUnit>();
+    protected List<ArmyUnit> playerArmy = new List<ArmyUnit>();
+    protected List<ArmyUnit> enemyArmy = new List<ArmyUnit>();
 
 
     private List<ResourceDisplay> laneResourceDisplays = new List<ResourceDisplay>();
@@ -43,7 +40,9 @@ public class Lane : MonoBehaviour
     private int repairTimer = 0;
     public int turnsToRepair;
 
-    private void Start()
+    List<ResourceTransaction> unfulfilled = new();
+
+    protected virtual void Start()
     {
         UpdateDisplay();
         purchaseButton.gameObject.SetActive(false);
@@ -54,7 +53,7 @@ public class Lane : MonoBehaviour
         spire.SetLane(this);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         float deltaTime = Time.deltaTime;
 
@@ -62,7 +61,7 @@ public class Lane : MonoBehaviour
         UpdateArmy(enemyArmy, deltaTime);
     }
 
-    private void UpdateArmy(List<ArmyUnit> army, float deltaTime)
+    protected virtual void UpdateArmy(List<ArmyUnit> army, float deltaTime)
     {
         for (int i = army.Count - 1; i >= 0; i--)
         {
@@ -118,6 +117,8 @@ public class Lane : MonoBehaviour
             resources["gems"] += gemIncome;
         }
 
+        foreach (Structure structure in structures) structure.RoundUpdate();
+        ResolveTransactions(resources, structures);
         UpdateDisplay();
 
         ClearArmy(playerArmy);
@@ -127,10 +128,10 @@ public class Lane : MonoBehaviour
         enemyArmy = new();
 
 
-        SpawnArmy(resources, unitPrefab, unitSpawnPoint, true, playerArmy);
+        SpawnArmy(resources, unitSpawnPoint, true, playerArmy);
         playerArmy.Add(spire);
 
-        SpawnArmy(GameManager.Instance.GetArmy().army, enemyUnitPrefab, enemyUnitSpawnPoint, false, enemyArmy);
+        SpawnArmy(GameManager.Instance.GetArmy().army, enemyUnitSpawnPoint, false, enemyArmy);
 
         float missingHp =  spire.maxHealth - spire.CurrentHealth;
         if (missingHp > spireRegen)
@@ -142,6 +143,100 @@ public class Lane : MonoBehaviour
             spire.TakeDamage(-missingHp);
         }
 
+    }
+
+    public void ResolveTransactions(SerializedDictionary<string, int> resources, List<Structure> structures)
+    {
+        // Flatten all transactions into one ordered queue.
+        // Earlier transactions always have priority.
+        List<(Structure structure, ResourceTransaction transaction)> queue = new();
+
+        foreach (var structure in structures)
+        {
+            foreach (var transaction in structure.OutstandingTransactions)
+            {
+                queue.Add((structure, transaction));
+            }
+        }
+
+        bool resolvedSomething;
+
+        do
+        {
+            resolvedSomething = false;
+
+            // Iterate in strict priority order every pass
+            foreach (var entry in queue)
+            {
+                var transaction = entry.transaction;
+
+                // Skip if already resolved this loop
+                if (!entry.structure.OutstandingTransactions.Contains(transaction))
+                    continue;
+
+                // Check affordability
+                bool canResolve = true;
+
+                foreach (var input in transaction.inputResources)
+                {
+                    int current = resources.GetValueOrDefault(input.resourceName, 0);
+
+                    if (current < input.amount)
+                    {
+                        canResolve = false;
+                        break;
+                    }
+                }
+
+                if (!canResolve)
+                    continue;
+
+                // Consume inputs
+                foreach (var input in transaction.inputResources)
+                {
+                    resources[input.resourceName] -= input.amount;
+                }
+
+                // Produce outputs
+                foreach (var output in transaction.outputResources)
+                {
+                    if (!resources.ContainsKey(output.resourceName))
+                        resources[output.resourceName] = 0;
+
+                    resources[output.resourceName] += output.amount;
+                }
+
+                // Mark complete
+                entry.structure.OutstandingTransactions.Remove(transaction);
+
+                resolvedSomething = true;
+            }
+
+        } while (resolvedSomething);
+
+        unfulfilled = new();
+
+        foreach (var structure in structures)
+        {
+            unfulfilled.AddRange(structure.OutstandingTransactions);
+        }
+    }
+
+    protected virtual void SpawnArmy(SerializedDictionary<string, int> army, Transform spawnPoint, bool playerControlled, List<ArmyUnit> units)
+    {
+        foreach (string key in army.Keys)
+        {
+            if (GameManager.Instance.unitData.ContainsKey(key))
+            {
+                for (int i = 0; i < army[key]; i++)
+                {
+                    ArmyUnit aUnit = UnitPool.Instance.Get();
+                    aUnit.Fill(GameManager.Instance.unitData[key], this, playerControlled, spawnPoint.position);
+
+                    units.Add(aUnit);
+                }
+            }
+        }
     }
 
     public void CityLevelUp()
@@ -178,19 +273,12 @@ public class Lane : MonoBehaviour
         structure.Fill(structureData);
         structures.Add(structure);
 
-        if (structure.CanGiveOutput(resources))
-        {
-            structure.ModifyResources(resources);
-        }
-        else
-        {
-            structuresNeedingInput.Add(structure);
-        }
 
+        ResolveTransactions(resources, structures);
         UpdateDisplay();
     }
 
-    private void ClearArmy(List<ArmyUnit> units)
+    protected void ClearArmy(List<ArmyUnit> units)
     {
         if(units.Contains(spire)) units.Remove(spire);
         for (int i = units.Count - 1; i >= 0; i--)
@@ -206,22 +294,7 @@ public class Lane : MonoBehaviour
         else enemyArmy.Remove(unit);
     }
 
-    private void SpawnArmy(SerializedDictionary<string, int> army, GameObject unitPrefab, Transform spawnPoint, bool playerControlled, List<ArmyUnit> units) 
-    {
-        foreach (string key in army.Keys)
-        {
-            if (GameManager.Instance.unitData.ContainsKey(key))
-            {
-                for (int i = 0; i < army[key]; i++)
-                {
-                    ArmyUnit aUnit = UnitPool.Instance.Get();
-                    aUnit.Fill(GameManager.Instance.unitData[key], this, playerControlled, spawnPoint.position);
 
-                    units.Add(aUnit);
-                }
-            }
-        }
-    }
 
     private void UpdateDisplay()
     {
@@ -239,29 +312,7 @@ public class Lane : MonoBehaviour
             laneResourceDisplays.Add(laneResourceDisplay);
         }
 
-        TryUpdateStructures();
         LayoutRebuilder.ForceRebuildLayoutImmediate(resourceDisplayHolder);
-    }
-
-    private void TryUpdateStructures()
-    {
-        int unusedStructures = structuresNeedingInput.Count;
-        foreach (Structure structure in structuresNeedingInput)
-        {
-            if (structure.CanGiveOutput(resources))
-            {
-                structure.ModifyResources(resources);
-            }
-        }
-
-        for (int i = structuresNeedingInput.Count - 1; i >= 0; i--)
-        {
-            if (structuresNeedingInput[i].HasRecievedInput)
-            {
-                structuresNeedingInput.RemoveAt(i);
-            }
-        }
-        if (structuresNeedingInput.Count != unusedStructures) UpdateDisplay();
     }
 
     private void OnStructureSelected(StructureData structureData)

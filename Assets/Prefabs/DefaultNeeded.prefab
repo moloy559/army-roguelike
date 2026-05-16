@@ -874,9 +874,7 @@ MonoBehaviour:
     rarity: 0
     sprite: {fileID: 0}
     goldCost: 0
-    transaction:
-      inputResources: []
-      outputResources: []
+    transactions: []
 --- !u!1 &3252456484658705228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,22 +2453,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7685446791656032254, guid: c920d5ad547bbf846af29b148da13970, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2821,6 +2803,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3160,6 +3146,10 @@ PrefabInstance:
     - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7008527976830979232, guid: c920d5ad547bbf846af29b148da13970, type: 3}
       propertyPath: m_AnchoredPosition.x

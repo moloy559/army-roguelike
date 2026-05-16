@@ -51,6 +51,7 @@ public class ArmyUnit : MonoBehaviour
 
     private Lane lane;
     protected UnitData unitData;
+    public UnitData GetUnitData { get { return unitData; } }
 
     private Vector2 spawnPosition;
     private Vector2 targetPosition;

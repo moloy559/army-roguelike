@@ -1,22 +1,22 @@
 Num Code,Name,Description,Notes,Sprite,Archetype,Size,Health,Attack,Attack Speed,Attack Range,Move Speed,Attack Type,Attack Data
-1,knight,description of the unit,notes about the unit,unit,Martial,1,30,5,0.5,0.3,2,Melee,
-2,archer,description of the unit,notes about the unit,unit,Martial,1,10,3,1,2,1,Ranged,'projectile-speed=3;
-projectile-sprite=arrow'
-3,lancer,description of the unit,notes about the unit,unit,Martial,1,15,4,1,0.6,1.5,Melee,
-4,cavalry,description of the unit,notes about the unit,unit,Martial,1,20,3,1,1.5,3,Melee,
-5,giant,description of the unit,notes about the unit,unit,Martial,2,65,30,0.5,0.4,0.2,Melee,
-6,assassin,description of the unit,notes about the unit,unit,Martial,1,10,10,3,0.3,6,Melee,
-7,soldier,description of the unit,notes about the unit,unit,Martial,1,12,3,2,0.5,1.5,Melee,
-8,dragon,description of the unit,notes about the unit,unit,Dragon,2,150,10,10,1,4,Melee,
-9,gunner,description of the unit,notes about the unit,unit,Martial,1,16,1,10,2,0.5,Ranged,'projectile-speed=3;
-projectile-sprite=arrow'
-10,population,description of the unit,notes about the unit,unit,Peasantry,1,10,0.25,4,0.3,1,Melee,
-11,druid,description of the unit,notes about the unit,druid,Nature,1,80,0.3,10,1,1,Ranged,'projectile-speed=3;
-projectile-sprite=magic-blast'
-12,dragon-rider,description of the unit,notes about the unit,unit,Dragon,2,180,12,10,2,4,Melee,
-13,mage,description of the unit,notes about the unit,unit,Magic,1,5,15,2,3,1,Ranged,'projectile-speed=3;
-projectile-sprite=magic-blast'
-14,hunter,description of the unit,notes about the unit,unit,Peasantry,1,8,0.5,3,1.8,1,Ranged,'projectile-speed=3;
-projectile-sprite=arrow'
-15,archmage,description of the unit,notes about the unit,unit,Magic,1,8,30,3,4,1,Ranged,'projectile-speed=3;
-projectile-sprite=magic-blast'
+1,knight,description of the unit,notes about the unit,knight,Martial,1,30,5,0.5,0.3,2,Melee,
+2,archer,description of the unit,notes about the unit,archer,Martial,1,10,3,1,2,1,Ranged,"projectile-speed=3;
+projectile-sprite=arrow"
+3,lancer,description of the unit,notes about the unit,lancer,Martial,1,15,4,1,0.6,1.5,Melee,
+4,cavalry,description of the unit,notes about the unit,cavalry,Martial,1,20,3,1,1.5,3,Melee,
+5,giant,description of the unit,notes about the unit,giant,Martial,2,65,30,0.5,0.4,0.2,Melee,
+6,assassin,description of the unit,notes about the unit,assassin,Martial,1,10,10,3,0.3,6,Melee,
+7,soldier,description of the unit,notes about the unit,soldier,Martial,1,12,3,2,0.5,1.5,Melee,
+8,dragon,description of the unit,notes about the unit,dragon,Dragon,2,100,5,10,1,4,Melee,
+9,gunner,description of the unit,notes about the unit,gunner,Martial,1,16,1,10,2,0.5,Ranged,"projectile-speed=3;
+projectile-sprite=arrow"
+10,peasant,description of the unit,notes about the unit,peasant,Peasantry,1,10,0.25,4,0.3,1,Melee,
+11,druid,description of the unit,notes about the unit,druid,Nature,1,80,0.3,10,1,1,Ranged,"projectile-speed=3;
+projectile-sprite=magic-blast"
+12,dragon-rider,description of the unit,notes about the unit,dragon-rider,Dragon,2,120,3,10,2,4,Melee,
+13,mage,description of the unit,notes about the unit,mage,Magic,1,5,15,2,3,1,Ranged,"projectile-speed=3;
+projectile-sprite=magic-blast"
+14,hunter,description of the unit,notes about the unit,hunter,Peasantry,1,8,0.5,3,1.8,1,Ranged,"projectile-speed=3;
+projectile-sprite=arrow"
+15,archmage,description of the unit,notes about the unit,archmage,Magic,1,8,30,3,4,1,Ranged,"projectile-speed=3;
+projectile-sprite=magic-blast"

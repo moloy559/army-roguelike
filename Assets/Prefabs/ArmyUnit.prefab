@@ -115,11 +115,6 @@ MonoBehaviour:
   wanderRadius: 2.28
   minWaitTime: 1
   maxWaitTime: 3
-  cohesionStrength: 0.35
-  alignmentStrength: 0.69
-  frontlineResistance: 0.62
-  engagementSlowMultiplier: 0.15
-  currentAttackers: 0
 --- !u!58 &4050879258689474070
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -183,63 +183,81 @@ MonoBehaviour:
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: knight
-        amount: 4
+        amount: 1
+      repeats: 3
+      cooldown: -1
+    - inputResources:
+      - resourceName: population
+        amount: 1
+      outputResources:
+      - resourceName: archer
+        amount: 1
+      repeats: 3
+      cooldown: -1
   - name: flechery
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: archer
         amount: 4
+      repeats: 0
+      cooldown: -1
   - name: lancer-maker
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: lancer
         amount: 4
+      repeats: 0
+      cooldown: -1
   - name: stable
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 5
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: cavalry
         amount: 4
+      repeats: 0
+      cooldown: -1
   - name: giant-maker
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: giant
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: assasins-guild
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
@@ -247,23 +265,27 @@ MonoBehaviour:
         amount: 2
       - resourceName: gems
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: barracks
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: soldier
         amount: 4
+      repeats: 0
+      cooldown: -1
   - name: grove
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       - resourceName: gems
@@ -271,166 +293,196 @@ MonoBehaviour:
       outputResources:
       - resourceName: druid
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: gunsmith
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 7
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: gunner
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: peasant-homes
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 5
       outputResources:
       - resourceName: peasant
         amount: 5
+      repeats: 0
+      cooldown: -1
   - name: mage-tower
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 5
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: gems
         amount: 2
       outputResources:
       - resourceName: mage
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: dragon-nest
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: gems
         amount: 2
       outputResources:
       - resourceName: egg
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: dragon-hatchery
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: egg
         amount: 1
       outputResources:
       - resourceName: dragon
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: gem-mine
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: gems
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: dragon-rider-roost
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: dragon
         amount: 1
       outputResources:
       - resourceName: dragon-rider
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: farm
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: pop-growth
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: gold-mine
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 2
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: gold
         amount: 1
+      repeats: 0
+      cooldown: -1
   - name: granary
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: pop-growth
         amount: 2
+      repeats: 0
+      cooldown: -1
   - name: treasury
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 4
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: gold
         amount: 2
+      repeats: 0
+      cooldown: -1
   - name: hunters-lodge
     rarity: 0
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 5
       outputResources:
       - resourceName: hunter
         amount: 10
+      repeats: 0
+      cooldown: -1
   - name: mill
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 7
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       outputResources:
       - resourceName: pop-growth
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: trading-post
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 3
       outputResources:
       - resourceName: gold
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: mage-academy
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 1
       - resourceName: gems
@@ -438,12 +490,14 @@ MonoBehaviour:
       outputResources:
       - resourceName: mage
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: bigger-mage-tower
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 3
       - resourceName: gems
@@ -451,50 +505,60 @@ MonoBehaviour:
       outputResources:
       - resourceName: mage
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: crystal-refinery
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 3
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 2
       outputResources:
       - resourceName: gems
         amount: 5
+      repeats: 0
+      cooldown: -1
   - name: mage-university
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 6
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: gems
         amount: 3
       outputResources:
       - resourceName: archmage
         amount: 3
+      repeats: 0
+      cooldown: -1
   - name: work-house
     rarity: 1
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 15
       outputResources:
       - resourceName: peasant
         amount: 20
+      repeats: 0
+      cooldown: -1
   - name: peasant-lodge
     rarity: 2
     sprite: {fileID: 21300000, guid: 002a472a5fd99694ab018773f1bcb37e, type: 3}
     goldCost: 1
-    transaction:
-      inputResources:
+    transactions:
+    - inputResources:
       - resourceName: population
         amount: 20
       outputResources:
       - resourceName: peasant
         amount: 30
+      repeats: 0
+      cooldown: -1
   resources:
   - name: gold
     sprite: {fileID: 21300000, guid: 1f782831b783eab4dbc6d7d4b4e60aea, type: 3}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class GameData : ScriptableObject
 
     public TextAsset shopGenerationTable;
 
-    private Dictionary<string, int> GetHeaders(TextAsset table)
+    public static Dictionary<string, int> GetHeaders(TextAsset table)
     {
         List<string[]> rows = ParseCSV(table.text);
 
@@ -39,12 +40,12 @@ public class GameData : ScriptableObject
         return map;
     }
 
-    private List<string[]> GetTableData(TextAsset table)
+    public static List<string[]> GetTableData(TextAsset table)
     {
         return ParseCSV(table.text);
     }
 
-    private List<string[]> ParseCSV(string csv)
+    public static List<string[]> ParseCSV(string csv)
     {
         List<string[]> rows = new();
 
@@ -91,18 +92,18 @@ public class GameData : ScriptableObject
         return rows;
     }
 
-    private string GetValue(List<string[]> data, Dictionary<string, int> headers, int row, string columnName)
+    public static string GetValue(List<string[]> data, Dictionary<string, int> headers, int row, string columnName)
     {
         return data[row + 1][headers[columnName]]
         .Trim('\r', '\n');
     }
 
-    private int GetTableSize(List<string[]> data, int columnCount)
+    public static int GetTableSize(List<string[]> data, int columnCount)
     {
         return data.Count - 1;
     }
 
-    private Dictionary<string, string> ParseExtraData(string data)
+    public static Dictionary<string, string> ParseExtraData(string data)
     {
         Dictionary<string, string> result = new();
 
@@ -118,7 +119,7 @@ public class GameData : ScriptableObject
 
         return result;
     }
-    private ResourceTransaction ParseTransaction(string data)
+    public static ResourceTransaction ParseTransaction(string data)
     {
         ResourceTransaction transaction = new()
         {
@@ -131,6 +132,7 @@ public class GameData : ScriptableObject
             string[] split = section.Split('=');
 
             string key = split[0];
+
             string value = split[1];
 
             if (key == "input")
@@ -138,12 +140,18 @@ public class GameData : ScriptableObject
 
             else if (key == "output")
                 transaction.outputResources = ParseResourceList(value);
+
+            else if (key == "repeats")
+                transaction.repeats = int.Parse(value);
+
+            else if (key == "cooldown")
+                transaction.cooldown = int.Parse(value);
         }
 
         return transaction;
     }
 
-    private List<ResourceSet> ParseResourceList(string data)
+    public static List<ResourceSet> ParseResourceList(string data)
     {
         List<ResourceSet> list = new();
 
@@ -220,7 +228,7 @@ public class GameData : ScriptableObject
 
         for (int i = 0; i < tableSize; i++)
         {
-            structuresData.Add(new StructureData()
+            StructureData structureData = new()
             {
                 name = GetValue(data, headers, i, "Name"),
 
@@ -230,10 +238,28 @@ public class GameData : ScriptableObject
                 rarity = Enum.Parse<Rarity>(GetValue(data, headers, i, "Rarity")),
 
                 goldCost = int.Parse(
-                    GetValue(data, headers, i, "Gold Cost")),
+                    GetValue(data, headers, i, "Gold Cost"))
+            };
 
-                transaction = ParseTransaction(GetValue(data, headers, i, "Transaction"))
-            });
+            structureData.transactions = new();
+
+            TryAddTransaction(structureData, "Transaction");
+
+            TryAddTransaction(structureData, "Transaction 2");
+
+            TryAddTransaction(structureData, "Transaction 3");
+
+
+            void TryAddTransaction(StructureData sd, string columnName)
+            {
+                string transactionString = GetValue(data, headers, i, columnName);
+                if(transactionString.Length > 4)
+                {
+                    sd.transactions.Add(ParseTransaction(transactionString));
+                }
+            }
+
+            structuresData.Add(structureData);
         }
 
         return structuresData;

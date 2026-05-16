@@ -11,8 +11,9 @@ public class ShopItemDisplay : MonoBehaviour
     public TextMeshProUGUI goldCostText;
     public TextMeshProUGUI rarityText;
 
-    public ResourceDisplay resourceDisplayInput;
-    public ResourceDisplay resourceDisplayOutput;
+    public Transform transactionDisplayHolder;
+    public GameObject transactionDisplayPrefab;
+
 
     public Transform resourceDisplayHolder;
     public GameObject resourceDisplayPrefab;
@@ -21,13 +22,20 @@ public class ShopItemDisplay : MonoBehaviour
     [SerializeField]
     private Toggle toggle;
 
+    [SerializeField]
+    private float defaultHeight = 144f;
+    [SerializeField]
+    private float displayHeight = 100f;
+
+    private RectTransform rect;
     private StructureData structureData;
     private bool purchased;
 
     private List<GameObject> displays = new();
-  
+      
     public void Fill(StructureData data)
     {
+        rect = GetComponent<RectTransform>();
         purchased = false;
 
         structureData = data;
@@ -37,30 +45,32 @@ public class ShopItemDisplay : MonoBehaviour
 
         rarityText.text = data.rarity.ToString();
 
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, defaultHeight + (data.transactions.Count * displayHeight));
+
         for (int i = displays.Count - 1; i >= 0; i--)
         {
             if (displays[i] != null) Destroy(displays[i]);
         }
         displays.Clear();
 
-        foreach (ResourceSet inputSet in data.transaction.inputResources) AddDisplay(inputSet);
-        breaker.transform.SetAsLastSibling();
-        foreach (ResourceSet outputSet in data.transaction.outputResources) AddDisplay(outputSet);
+        foreach (ResourceTransaction transaction in data.transactions) 
+        {
+            AddDisplay(transaction);
+        }
 
-        //resourceDisplayInput.Fill(data.inputResource);
-        //resourceDisplayOutput.Fill(data.outputResource);
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transactionDisplayHolder.GetComponent<RectTransform>());
+        Helpers.Delay(() => LayoutRebuilder.ForceRebuildLayoutImmediate(rect));
         CheckAfford();
 
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(OnToggled);
     }
 
-    private void AddDisplay(ResourceSet resourceSet)
+    private void AddDisplay(ResourceTransaction transaction)
     {
-        GameObject newObj = Instantiate(resourceDisplayPrefab, resourceDisplayHolder);
-        newObj.GetComponent<ResourceDisplay>().Fill(resourceSet);
+        GameObject newObj = Instantiate(transactionDisplayPrefab, transactionDisplayHolder);
+        newObj.GetComponent<TransactionDisplay>().Fill(transaction);
         displays.Add(newObj);
     }
 
